@@ -14,7 +14,6 @@ public class GameManager : MonoBehaviour
     private int _roundScore = 0;
 
     public float PinHeight = 4;
-    public float PinMax = 1;
 
     private bool isSecondThrow = false;
 

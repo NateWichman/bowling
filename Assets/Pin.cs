@@ -21,8 +21,7 @@ public class Pin : MonoBehaviour
     void Update()
     {
 
-        if (!hasFallen && (PinHeight.transform.position.y < GameManager.Instance.PinHeight
-            || PinHeight.transform.position.y > GameManager.Instance.PinMax))
+        if (!hasFallen && (PinHeight.transform.position.y < GameManager.Instance.PinHeight)
         {
             GameManager.Instance.PinFall();
             hasFallen = true;
