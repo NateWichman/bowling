@@ -23,6 +23,10 @@ public class Ball : MonoBehaviour
 
     private Rigidbody rb;
 
+    private LineRenderer lineRenderer;
+
+    private Vector3 dir;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -30,12 +34,18 @@ public class Ball : MonoBehaviour
         _spinUnit = (_maxSpin - _minSpin) / 100f;
         rb.maxAngularVelocity = 100000;
 
+        lineRenderer = gameObject.AddComponent<LineRenderer>();
+        lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
+        lineRenderer.widthMultiplier = 0.2f;
+        lineRenderer.positionCount = 100;
+        lineRenderer.positionCount = 2;
+
     }
 
 
     public void Shoot()
     {
-        var force = (new Vector3(-1, 0, 0)) * Power * rb.mass;
+        var force = (-dir.normalized) * Power * rb.mass;
         rb.AddForce(force);
         rb.AddTorque(new Vector3(-1, 0, 0) * spin * rb.mass);
     }
@@ -79,6 +89,10 @@ public class Ball : MonoBehaviour
             Debug.Log(hit.transform.name);
             Debug.Log("hit");
 
+            lineRenderer.SetPosition(0, new Vector3(transform.position.x, transform.position.y, transform.position.z));
+            lineRenderer.SetPosition(1, new Vector3(hit.point.x, transform.position.y, hit.point.z));
+
+            dir = new Vector3(transform.position.x, transform.position.y, transform.position.z) - new Vector3(hit.point.x, transform.position.y, hit.point.z);
         }
         else
         {
