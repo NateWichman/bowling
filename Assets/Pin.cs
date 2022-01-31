@@ -21,7 +21,9 @@ public class Pin : MonoBehaviour
     void Update()
     {
 
-        if (!hasFallen && (PinHeight.transform.position.y < GameManager.Instance.PinHeight)
+        /* probably need to calculate if a pin has fallen differently, sometimes it gets blown up in the air,
+        and wont get below the Gamemanagers pin height before the round ends */
+        if (!hasFallen && PinHeight.transform.position.y < GameManager.Instance.PinHeight)
         {
             GameManager.Instance.PinFall();
             hasFallen = true;
