@@ -7,10 +7,10 @@ public class Ball : MonoBehaviour
     public UiManager UIManager;
     public bool IsThrown = false;
 
-    private float MinPower = 3000f;
-    private float MaxPower = 8000f;
+    private float MinPower = 1500f;
+    private float MaxPower = 4000f;
 
-    private float Power = 3000f;
+    private float Power = 1500f;
 
     private float spin = 0f;
     private float _maxSpin = 2000f;
@@ -45,6 +45,7 @@ public class Ball : MonoBehaviour
 
     public void Shoot()
     {
+        GameManager.Instance.OnThrow();
         var force = (-dir.normalized) * Power * rb.mass;
         rb.AddForce(force);
         rb.AddTorque(new Vector3(-1, 0, 0) * spin * rb.mass);
@@ -121,21 +122,20 @@ public class Ball : MonoBehaviour
             if (mouseDown)
             {
                 Shoot();
+
             }
             mouseDown = false;
             UIManager.SetSlider(0);
             UIManager.SetSecondarySlider(0);
-
-
         }
 
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
         {
 
             gameObject.transform.Translate(new Vector3(0f, 0, -1f) * 10f * Time.deltaTime);
         }
 
-        if (Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
         {
             gameObject.transform.Translate(new Vector3(0f, 0, 1f) * 10f * Time.deltaTime);
         }

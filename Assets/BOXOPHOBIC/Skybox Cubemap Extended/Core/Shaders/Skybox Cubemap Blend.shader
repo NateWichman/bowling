@@ -129,7 +129,7 @@ Shader "Skybox/Cubemap Blend"
 				UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(o);
 				UNITY_TRANSFER_INSTANCE_ID(v, o);
 
-				float lerpResult268 = lerp( 1.0 , ( unity_OrthoParams.y / unity_OrthoParams.x ) , unity_OrthoParams.w);
+				float lerpResult268 = lerp( ( unity_OrthoParams.y / unity_OrthoParams.x ), 1.0 , unity_OrthoParams.w);
 				half CAMERA_MODE300 = lerpResult268;
 				float3 appendResult1220 = (float3(v.vertex.xyz.x , ( v.vertex.xyz.y * CAMERA_MODE300 ) , v.vertex.xyz.z));
 				float3 appendResult1208 = (float3(0.0 , -_CubemapPosition , 0.0));

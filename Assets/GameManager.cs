@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -10,6 +9,7 @@ public class GameManager : MonoBehaviour
     public UiManager UIManager;
     private GameObject NextPins;
     private GameObject NextBall;
+    public CameraFollow cameraFollow;
 
     private int _roundScore = 0;
 
@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (BowlingBall.transform.position.y < -20f)
+        if (BowlingBall.transform.position.y < -100f)
         {
             if (isSecondThrow)
             {
@@ -106,5 +106,10 @@ public class GameManager : MonoBehaviour
         Pins = NextPins;
         NextPins = GameObject.Instantiate(Pins);
         NextPins.SetActive(false);
+    }
+
+    public void OnThrow()
+    {
+        cameraFollow.FollowBall();
     }
 }
