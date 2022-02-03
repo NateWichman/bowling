@@ -34,7 +34,11 @@ public class Ball : MonoBehaviour
         _spinUnit = (_maxSpin - _minSpin) / 100f;
         rb.maxAngularVelocity = 100000;
 
-        lineRenderer = gameObject.AddComponent<LineRenderer>();
+
+        lineRenderer = GetComponent<LineRenderer>();
+        if (lineRenderer == null)
+            lineRenderer = gameObject.AddComponent<LineRenderer>();
+
         lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
         lineRenderer.widthMultiplier = 0.2f;
         lineRenderer.positionCount = 100;
@@ -86,18 +90,10 @@ public class Ball : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out hit, 100))
         {
-
-            Debug.Log(hit.transform.name);
-            Debug.Log("hit");
-
             lineRenderer.SetPosition(0, new Vector3(transform.position.x, transform.position.y, transform.position.z));
             lineRenderer.SetPosition(1, new Vector3(hit.point.x, transform.position.y, hit.point.z));
 
             dir = new Vector3(transform.position.x, transform.position.y, transform.position.z) - new Vector3(hit.point.x, transform.position.y, hit.point.z);
-        }
-        else
-        {
-            Debug.Log("miss");
         }
 
 
