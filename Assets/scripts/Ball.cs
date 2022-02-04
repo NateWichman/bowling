@@ -24,6 +24,7 @@ public class Ball : MonoBehaviour
     private Rigidbody rb;
 
     private LineRenderer lineRenderer;
+    private AudioSource _audioSource;
 
     private Vector3 dir;
 
@@ -34,6 +35,7 @@ public class Ball : MonoBehaviour
         _spinUnit = (_maxSpin - _minSpin) / 100f;
         rb.maxAngularVelocity = 100000;
 
+        _audioSource = GetComponent<AudioSource>();
 
         lineRenderer = GetComponent<LineRenderer>();
         if (lineRenderer == null)
@@ -53,6 +55,7 @@ public class Ball : MonoBehaviour
         var force = (-dir.normalized) * Power * rb.mass;
         rb.AddForce(force);
         rb.AddTorque(new Vector3(-1, 0, 0) * spin * rb.mass);
+        _audioSource.Play();
     }
 
     private void WindUp()
@@ -135,5 +138,6 @@ public class Ball : MonoBehaviour
         {
             gameObject.transform.Translate(new Vector3(0f, 0, 1f) * 10f * Time.deltaTime);
         }
+
     }
 }

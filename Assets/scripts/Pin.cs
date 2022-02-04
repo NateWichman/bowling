@@ -7,9 +7,22 @@ public class Pin : MonoBehaviour
     public GameObject PinHeight;
     // Start is called before the first frame update
 
+    private AudioSource _audioSource;
+
     public bool hasFallen = false;
     void Start()
     {
+        _audioSource = GetComponent<AudioSource>();
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("COLLISION");
+
+        if (collision.gameObject.tag == "BALL" || collision.gameObject.tag == "PIN")
+        {
+            _audioSource.Play();
+        }
     }
 
     public void Destroy()
@@ -25,6 +38,7 @@ public class Pin : MonoBehaviour
         and wont get below the Gamemanagers pin height before the round ends */
         if (!hasFallen && PinHeight.transform.position.y < GameManager.Instance.PinHeight)
         {
+            _audioSource.Play();
             GameManager.Instance.PinFall();
             hasFallen = true;
         }

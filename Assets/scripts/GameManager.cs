@@ -43,6 +43,12 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (BowlingBall.transform.position.y < -6f)
+        {
+            var a = BowlingBall.GetComponent<AudioSource>();
+            if (a.isPlaying)
+                a.Stop();
+        }
         if (BowlingBall.transform.position.y < -100f)
         {
             if (isSecondThrow)
