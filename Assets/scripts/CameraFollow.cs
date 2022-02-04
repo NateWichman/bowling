@@ -7,6 +7,8 @@ public class CameraFollow : MonoBehaviour
     private Vector3 _startPos;
     private GameObject _ball;
 
+    private Animator _animator;
+
     private bool _isFollowing = false;
 
     private float _offset;
@@ -16,6 +18,8 @@ public class CameraFollow : MonoBehaviour
     void Start()
     {
         _startPos = transform.position;
+        _animator = GetComponent<Animator>();
+        GameManager.Instance.Resetting.AddListener(Reset);
     }
 
     void Update()
@@ -25,13 +29,15 @@ public class CameraFollow : MonoBehaviour
             var newXpos = _ball.transform.position.x + _offset;
             if (newXpos < _minXpos)
                 newXpos = _minXpos;
-            transform.position = new Vector3(newXpos, transform.position.y, transform.position.z);
-        }
 
-        if (_ball == null)
-        {
-            _isFollowing = false;
-            transform.position = _startPos;
+
+            var newYPos = transform.position.y - 20 * Time.deltaTime;
+            Debug.Log(newYPos);
+            if (newYPos < 7) newYPos = 5;
+
+
+            transform.position = new Vector3(newXpos, newYPos, transform.position.z);
+
         }
     }
 
@@ -40,5 +46,14 @@ public class CameraFollow : MonoBehaviour
         _ball = GameObject.FindGameObjectWithTag("BALL");
         _offset = Mathf.Abs(_ball.transform.position.x - transform.position.x);
         _isFollowing = true;
+        _animator.SetTrigger("PAN");
+
+    }
+
+    private void Reset()
+    {
+        _isFollowing = false;
+        transform.position = _startPos;
+        _animator.SetTrigger("RESET");
     }
 }

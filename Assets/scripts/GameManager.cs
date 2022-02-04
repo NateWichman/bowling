@@ -1,9 +1,11 @@
 ﻿
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    public UnityEvent Resetting;
     public GameObject BowlingBall;
     public GameObject Pins;
     public UiManager UIManager;
@@ -38,6 +40,7 @@ public class GameManager : MonoBehaviour
         NextPins.SetActive(false);
         NextBall = GameObject.Instantiate(BowlingBall);
         NextBall.SetActive(false);
+        Resetting = new UnityEvent();
     }
 
     // Update is called once per frame
@@ -103,6 +106,7 @@ public class GameManager : MonoBehaviour
         BowlingBall = NextBall;
         NextBall = GameObject.Instantiate(BowlingBall);
         NextBall.SetActive(false);
+        Resetting.Invoke();
     }
 
     private void ResetPins()
