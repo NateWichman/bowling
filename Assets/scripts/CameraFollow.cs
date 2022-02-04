@@ -32,8 +32,8 @@ public class CameraFollow : MonoBehaviour
 
 
             var newYPos = transform.position.y - 20 * Time.deltaTime;
-            Debug.Log(newYPos);
-            if (newYPos < 7) newYPos = 5;
+            newYPos = newYPos < 5 ? 5 : newYPos;
+
 
 
             transform.position = new Vector3(newXpos, newYPos, transform.position.z);
