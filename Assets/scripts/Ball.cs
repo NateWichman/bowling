@@ -26,10 +26,13 @@ public class Ball : MonoBehaviour
     private LineRenderer lineRenderer;
     private AudioSource _audioSource;
 
-    private Vector3 dir;
+    private Vector3 dir = new Vector3(3f, 0, 0);
+    private InputService _inputService;
 
     void Start()
     {
+        _inputService = InputService.Instance;
+        _inputService.InputEvent.AddListener(InputEvent);
         rb = GetComponent<Rigidbody>();
         _powerUnit = (MaxPower - MinPower) / 100f;
         _spinUnit = (_maxSpin - _minSpin) / 100f;
@@ -46,13 +49,51 @@ public class Ball : MonoBehaviour
         lineRenderer.positionCount = 100;
         lineRenderer.positionCount = 2;
 
+
+        UpdateLine();
+
+    }
+
+    void Destroy()
+    {
+        Debug.Log("destorying");
+        _inputService.InputEvent.RemoveListener(InputEvent);
+    }
+
+    private void InputEvent(InputEventStruct data)
+    {
+        if (IsThrown) return;
+
+
+        if (data.Type == InputType.POWER)
+        {
+            if (data.IsDown)
+            {
+                mouseDown = true;
+            }
+            else
+            {
+                IsThrown = true;
+                if (mouseDown)
+                {
+                    Shoot();
+
+                }
+                mouseDown = false;
+                UIManager.SetSlider(0);
+                UIManager.SetSecondarySlider(0);
+            }
+        }
     }
 
 
     public void Shoot()
     {
         GameManager.Instance.OnThrow();
-        var force = (-dir.normalized) * Power * rb.mass;
+
+        var direction = new Vector3(transform.position.x, transform.position.y, transform.position.z) - new Vector3(dir.x, transform.position.y, dir.z);
+        direction = -direction.normalized;
+        var force = (direction) * Power * rb.mass;
         rb.AddForce(force);
         rb.AddTorque(new Vector3(-1, 0, 0) * spin * rb.mass);
         _audioSource.Play();
@@ -81,6 +122,12 @@ public class Ball : MonoBehaviour
         UIManager.SetSecondarySlider((int)percent);
     }
 
+    private void UpdateLine()
+    {
+        lineRenderer.SetPosition(0, new Vector3(transform.position.x, transform.position.y, transform.position.z));
+        lineRenderer.SetPosition(1, new Vector3(dir.x, transform.position.y, dir.z));
+    }
+
 
     public void Update()
     {
@@ -89,54 +136,38 @@ public class Ball : MonoBehaviour
             return;
         }
 
-        RaycastHit hit;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out hit, 100))
-        {
-            lineRenderer.SetPosition(0, new Vector3(transform.position.x, transform.position.y, transform.position.z));
-            lineRenderer.SetPosition(1, new Vector3(hit.point.x, transform.position.y, hit.point.z));
-
-            dir = new Vector3(transform.position.x, transform.position.y, transform.position.z) - new Vector3(hit.point.x, transform.position.y, hit.point.z);
-        }
-
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            mouseDown = true;
-        }
-
         if (mouseDown)
         {
             WindUp();
         }
 
-        if (Input.GetMouseButton(1))
+        if (_inputService.IsSpinDown)
         {
             AddSpin();
         }
 
-        if (Input.GetMouseButtonUp(0))
+        if (_inputService.IsLeftDown)
         {
-            IsThrown = true;
-            if (mouseDown)
-            {
-                Shoot();
-
-            }
-            mouseDown = false;
-            UIManager.SetSlider(0);
-            UIManager.SetSecondarySlider(0);
-        }
-
-        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
-        {
-
             gameObject.transform.Translate(new Vector3(0f, 0, -1f) * 10f * Time.deltaTime);
+            UpdateLine();
         }
 
-        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
+        if (_inputService.IsRightDown)
         {
             gameObject.transform.Translate(new Vector3(0f, 0, 1f) * 10f * Time.deltaTime);
+            UpdateLine();
+        }
+
+        if (_inputService.IsUpperLeftDown)
+        {
+            dir.z += -10f * Time.deltaTime;
+            UpdateLine();
+        }
+
+        if (_inputService.IsUpperRightDown)
+        {
+            dir.z += +10f * Time.deltaTime;
+            UpdateLine();
         }
 
     }

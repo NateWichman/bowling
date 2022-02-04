@@ -17,7 +17,7 @@ public class Pin : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("COLLISION");
+
 
         if (collision.gameObject.tag == "BALL" || collision.gameObject.tag == "PIN")
         {
