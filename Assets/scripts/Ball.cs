@@ -26,7 +26,7 @@ public class Ball : MonoBehaviour
     private LineRenderer lineRenderer;
     private AudioSource _audioSource;
 
-    private Vector3 dir = new Vector3(3f, 0, 0);
+    private Vector3 dir = new Vector3(1f, 0, 0);
     private InputService _inputService;
 
     void Start()
@@ -48,6 +48,11 @@ public class Ball : MonoBehaviour
         lineRenderer.widthMultiplier = 0.2f;
         lineRenderer.positionCount = 100;
         lineRenderer.positionCount = 2;
+
+        // randomizing ball position.
+        transform.Translate(new Vector3(0, 0, Random.Range(-4.5f, 4.5f)));
+        dir.z += Random.Range(-4.5f, 4.5f);
+        dir.x = transform.position.x - 15f;
 
 
         UpdateLine();
@@ -97,6 +102,8 @@ public class Ball : MonoBehaviour
         rb.AddForce(force);
         rb.AddTorque(new Vector3(-1, 0, 0) * spin * rb.mass);
         _audioSource.Play();
+
+        StartCoroutine("Timeout");
     }
 
     private void WindUp()
@@ -133,6 +140,7 @@ public class Ball : MonoBehaviour
     {
         if (IsThrown)
         {
+            lineRenderer.enabled = false;
             return;
         }
 
@@ -148,27 +156,33 @@ public class Ball : MonoBehaviour
 
         if (_inputService.IsLeftDown)
         {
-            gameObject.transform.Translate(new Vector3(0f, 0, -1f) * 10f * Time.deltaTime);
+            gameObject.transform.Translate(new Vector3(0f, 0, -1f) * 12.5f * Time.deltaTime);
             UpdateLine();
         }
 
         if (_inputService.IsRightDown)
         {
-            gameObject.transform.Translate(new Vector3(0f, 0, 1f) * 10f * Time.deltaTime);
+            gameObject.transform.Translate(new Vector3(0f, 0, 1f) * 12.5f * Time.deltaTime);
             UpdateLine();
         }
 
         if (_inputService.IsUpperLeftDown)
         {
-            dir.z += -10f * Time.deltaTime;
+            dir.z += -12.5f * Time.deltaTime;
             UpdateLine();
         }
 
         if (_inputService.IsUpperRightDown)
         {
-            dir.z += +10f * Time.deltaTime;
+            dir.z += +12.5f * Time.deltaTime;
             UpdateLine();
         }
 
+    }
+
+    IEnumerator Timeout()
+    {
+        yield return new WaitForSeconds(13f);
+        GameManager.Instance.ForceBallFall();
     }
 }

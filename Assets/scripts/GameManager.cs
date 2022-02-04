@@ -5,6 +5,7 @@ using UnityEngine.Events;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    public bool BallIsThrowing = false;
     public UnityEvent Resetting;
     public GameObject BowlingBall;
     public GameObject Pins;
@@ -12,6 +13,8 @@ public class GameManager : MonoBehaviour
     private GameObject NextPins;
     private GameObject NextBall;
     public CameraFollow cameraFollow;
+
+    public GameObject Panel;
 
     private int _roundScore = 0;
 
@@ -54,14 +57,7 @@ public class GameManager : MonoBehaviour
         }
         if (BowlingBall.transform.position.y < -100f)
         {
-            if (isSecondThrow)
-            {
-                Reset();
-            }
-            else
-            {
-                FirstThrowDone();
-            }
+            RoundOver();
         }
     }
 
@@ -107,6 +103,8 @@ public class GameManager : MonoBehaviour
         NextBall = GameObject.Instantiate(BowlingBall);
         NextBall.SetActive(false);
         Resetting.Invoke();
+        BallIsThrowing = false;
+        Panel.SetActive(true);
     }
 
     private void ResetPins()
@@ -116,10 +114,32 @@ public class GameManager : MonoBehaviour
         Pins = NextPins;
         NextPins = GameObject.Instantiate(Pins);
         NextPins.SetActive(false);
+        Panel.SetActive(false);
+        BallIsThrowing = false;
+        Panel.SetActive(true);
     }
 
     public void OnThrow()
     {
+        Panel.SetActive(false);
+        BallIsThrowing = true;
         cameraFollow.FollowBall();
+    }
+
+    private void RoundOver()
+    {
+        if (isSecondThrow)
+        {
+            Reset();
+        }
+        else
+        {
+            FirstThrowDone();
+        }
+    }
+
+    public void ForceBallFall()
+    {
+        RoundOver();
     }
 }
