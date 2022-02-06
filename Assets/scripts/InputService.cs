@@ -130,5 +130,33 @@ public class InputService : MonoBehaviour
         });
     }
 
+    public void ClearAll()
+    {
+        if (IsRightDown)
+        {
+            RightUp();
+        }
+        if (IsLeftDown)
+        {
+            Left(false);
+        }
+        if (IsPowerDown)
+        {
+            PrimaryUp();
+        }
+        if (IsSpinDown)
+        {
+            SecondaryUp();
+        }
+        if (IsUpperLeftDown)
+        {
+            UpperLeft(false);
+        }
+        if (IsUpperRightDown)
+        {
+            UpperRight(false);
+        }
+    }
+
 
 }

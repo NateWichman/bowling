@@ -124,6 +124,7 @@ public class GameManager : MonoBehaviour
         Panel.SetActive(false);
         BallIsThrowing = true;
         cameraFollow.FollowBall();
+        InputService.Instance.ClearAll();
     }
 
     private void RoundOver()
