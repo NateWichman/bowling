@@ -7,10 +7,10 @@ public class Ball : MonoBehaviour
     public UiManager UIManager;
     public bool IsThrown = false;
 
-    private float MinPower = 1500f;
+    private float MinPower = 500f;
     private float MaxPower = 4000f;
 
-    private float Power = 1500f;
+    private float Power = 500f;
 
     private float spin = 0f;
     private float _maxSpin = 2000f;
