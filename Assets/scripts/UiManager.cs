@@ -9,7 +9,7 @@ public class UiManager : MonoBehaviour
     public TextMeshProUGUI ScoreText;
     public TextMeshProUGUI SubText;
 
-    public TextMeshProUGUI FrameText;
+    public GameObject FrameText;
 
     public GridLayoutGroup Grid;
 
@@ -71,9 +71,8 @@ public class UiManager : MonoBehaviour
             GameObject.Destroy(child.gameObject);
         }
 
-        var totalsText = "";
         var width = Grid.GetComponent<RectTransform>().rect.width;
-        var gridSize = width / 10;
+        var gridSize = (width / 10);
         Grid.cellSize = new Vector2(gridSize, gridSize);
 
 
@@ -132,8 +131,14 @@ public class UiManager : MonoBehaviour
 
     private void AddFrameText(string text)
     {
-        var textObj = Instantiate(FrameText);
+        var frameObj = Instantiate(FrameText);
+        if (text == "")
+        {
+            var img = frameObj.GetComponent<Image>();
+            img.enabled = false;
+        }
+        var textObj = frameObj.GetComponentInChildren<TextMeshProUGUI>();
         textObj.SetText(text);
-        textObj.gameObject.transform.parent = Grid.gameObject.transform;
+        frameObj.transform.parent = Grid.gameObject.transform;
     }
 }

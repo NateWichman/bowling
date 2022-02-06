@@ -472,7 +472,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ScoreText: {fileID: 981062494}
   SubText: {fileID: 82692410}
-  FrameText: {fileID: 7121500389183084555, guid: beaaf8e64e7a34747923e8641a11bc9e, type: 3}
+  FrameText: {fileID: 3831393663611622628, guid: e65f9437ba466ee44bad68726693a74d, type: 3}
   Grid: {fileID: 1574057151}
   slider: {fileID: 1029026455}
   secondarySlider: {fileID: 760930166}
@@ -3336,7 +3336,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
