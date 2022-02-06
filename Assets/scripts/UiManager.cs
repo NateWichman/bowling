@@ -72,11 +72,12 @@ public class UiManager : MonoBehaviour
         }
 
         var width = Grid.GetComponent<RectTransform>().rect.width;
-        var gridSize = (width / 10);
-        Grid.cellSize = new Vector2(gridSize, gridSize);
+        var gridSize = (width / 4);
+        Grid.cellSize = new Vector2(gridSize, 30);
 
 
         var scores = new List<string>();
+        var texts = new List<string>();
 
         for (var i = 0; i < frames.Count; i++)
         {
@@ -113,18 +114,66 @@ public class UiManager : MonoBehaviour
                 }
             }
 
-            AddFrameText(text);
+            texts.Add(text);
             scores.Add($"{frame.totalScore}");
         }
 
-        for (var i = 0; i < 10 - frames.Count; i++)
+
+        // find the current frame,
+        var currentFrame = frames.Count;
+        if (currentFrame >= 3)
+        {
+            for (var i = 2; i >= 0; i--)
+            {
+                AddFrameText($"{frames.Count - i}");
+            }
+        }
+        else
+        {
+            AddFrameText("1");
+            AddFrameText("2");
+            AddFrameText("3");
+        }
+        AddFrameText("");
+
+
+        var last4Texts = new List<string>();
+        for (var i = 0; i < 3; i++)
+        {
+            if (texts.Count >= 1)
+            {
+                last4Texts.Add(texts.ElementAt(texts.Count - 1));
+                texts.RemoveAt(texts.Count - 1);
+            }
+        }
+        last4Texts.Reverse();
+        last4Texts.ForEach(x => AddFrameText(x));
+        for (var i = 0; i < 3 - last4Texts.Count; i++)
         {
             AddFrameText("");
         }
-        for (var i = 0; i < scores.Count; i++)
+        AddFrameText("Total");
+
+
+        last4Texts = new List<string>();
+        for (var i = 0; i < 3; i++)
         {
-            AddFrameText(scores.ElementAt(i));
+            if (scores.Count >= 1)
+            {
+                last4Texts.Add(scores.ElementAt(scores.Count - 1));
+                scores.RemoveAt(scores.Count - 1);
+            }
         }
+        last4Texts.Reverse();
+        last4Texts.ForEach(x => AddFrameText(x));
+        for (var i = 0; i < 3 - last4Texts.Count; i++)
+        {
+            AddFrameText("");
+        }
+
+        var total = frames.Sum(x => x.totalScore);
+
+        AddFrameText($"{ total }");
 
 
     }
