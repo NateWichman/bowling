@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
 
     public GameObject Panel;
 
+    private Score _score;
+
     private int _roundScore = 0;
 
     public float PinHeight = 4;
@@ -25,6 +27,7 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
+        _score = new Score();
     }
 
     public void PinFall()
@@ -76,7 +79,7 @@ public class GameManager : MonoBehaviour
         ResetBall();
 
         GameObject[] pins = GameObject.FindGameObjectsWithTag("PIN");
-        Debug.Log(pins.Length);
+
         foreach (var pin in pins)
         {
             if (pin.GetComponent<Pin>().hasFallen)
@@ -90,13 +93,15 @@ public class GameManager : MonoBehaviour
     {
         ResetBall();
         ResetPins();
-        _roundScore = 0;
         UIManager.Reset();
         isSecondThrow = false;
     }
 
     private void ResetBall()
     {
+        _score.OnShot(_roundScore);
+        _roundScore = 0;
+        UIManager.DisplayFrames(_score.GetFrames());
         GameObject.Destroy(BowlingBall);
         NextBall.SetActive(true);
         BowlingBall = NextBall;
