@@ -473,6 +473,7 @@ MonoBehaviour:
   ScoreText: {fileID: 981062494}
   SubText: {fileID: 82692410}
   FrameText: {fileID: 3831393663611622628, guid: e65f9437ba466ee44bad68726693a74d, type: 3}
+  FrameText2: {fileID: 7637979536331163451, guid: 0a43c4f7069522f4c9af3eff3e17d882, type: 3}
   Grid: {fileID: 1574057154}
   slider: {fileID: 1029026455}
   secondarySlider: {fileID: 760930166}

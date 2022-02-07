@@ -10,6 +10,7 @@ public class UiManager : MonoBehaviour
     public TextMeshProUGUI SubText;
 
     public GameObject FrameText;
+    public GameObject FrameText2;
 
     public GridLayoutGroup Grid;
 
@@ -61,7 +62,7 @@ public class UiManager : MonoBehaviour
 
     public IEnumerator FadeTextToZeroAlpha(float t, TextMeshProUGUI i)
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSecondsRealtime(1);
         i.color = new Color(i.color.r, i.color.g, i.color.b, 1);
         while (i.color.a > 0.0f)
         {
@@ -142,7 +143,7 @@ public class UiManager : MonoBehaviour
         {
             for (var i = 2; i >= 0; i--)
             {
-                AddFrameText($"{frames.Count - i}");
+                AddFrameText($"{frames.Count - i}", true);
             }
         }
         else
@@ -178,16 +179,15 @@ public class UiManager : MonoBehaviour
 
     private void AddFrameText(string text, bool noBackground = false)
     {
-        var frameObj = Instantiate(FrameText);
-        if (text == "")
+        GameObject frameObj;
+
+        if (noBackground || text == "")
         {
-            var img = frameObj.GetComponent<Image>();
-            img.enabled = false;
+            frameObj = Instantiate(FrameText2);
         }
-        if (noBackground)
+        else
         {
-            var img = frameObj.GetComponent<Image>();
-            img.enabled = false;
+            frameObj = Instantiate(FrameText);
         }
         var textObj = frameObj.GetComponentInChildren<TextMeshProUGUI>();
         textObj.SetText(text);
