@@ -99,6 +99,10 @@ public class GameManager : MonoBehaviour
 
     private void ResetBall()
     {
+        if (_score.IsGameOver())
+        {
+            _score = new Score();
+        }
         _score.OnShot(_roundScore);
         _roundScore = 0;
         UIManager.DisplayFrames(_score.GetFrames());

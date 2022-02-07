@@ -15,16 +15,27 @@ public class Score
     private float score = 0;
     private List<Frame> _frames = new List<Frame>();
 
-    private bool _isGameOver = false;
-
     public List<Frame> GetFrames()
     {
         return _frames;
     }
 
+    public bool IsGameOver()
+    {
+        if (_frames.Count != 10) return false;
+
+        var current = _frames.Last();
+
+        if (current.shots.Count == 3) return true;
+
+        if (current.shots.Count == 2 && (!current.isSpare || !current.isStrike)) return true;
+
+        return false;
+    }
+
     public void OnShot(int numPins)
     {
-        if (_isGameOver) throw new System.Exception("GAME OVER");
+        if (IsGameOver()) throw new System.Exception("GAME OVER");
 
         // first shot of game
         if (_frames.Count == 0)
@@ -42,7 +53,7 @@ public class Score
         var currentFrame = _frames.Last();
 
         // First shot in frame
-        if (currentFrame.shots.Count == 2 || currentFrame.isStrike)
+        if ((currentFrame.shots.Count == 2 || currentFrame.isStrike) && _frames.Count != 10)
         {
             _frames.Add(new Frame
             {
@@ -76,7 +87,6 @@ public class Score
         {
             currentFrame.shots.Add(numPins);
             currentFrame.totalScore += numPins;
-            Debug.Log("SECOND SHOT " + currentFrame.totalScore);
 
             if (currentFrame.totalScore == 10)
             {
@@ -93,11 +103,6 @@ public class Score
                     prevFrame.totalScore += numPins;
                 }
             }
-
-            if (_frames.Count == 10 && (!currentFrame.isSpare || !currentFrame.isStrike))
-            {
-                _isGameOver = true;
-            }
         }
 
 
@@ -108,7 +113,6 @@ public class Score
             {
                 currentFrame.shots.Add(numPins);
             }
-            _isGameOver = true;
         }
 
 
