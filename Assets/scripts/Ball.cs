@@ -45,14 +45,14 @@ public class Ball : MonoBehaviour
             lineRenderer = gameObject.AddComponent<LineRenderer>();
 
         lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
-        lineRenderer.widthMultiplier = 0.2f;
+        lineRenderer.widthMultiplier = 1f;
         lineRenderer.positionCount = 100;
         lineRenderer.positionCount = 2;
 
         // randomizing ball position.
         transform.Translate(new Vector3(0, 0, Random.Range(-4.5f, 4.5f)));
         dir.z += Random.Range(-4.5f, 4.5f);
-        dir.x = transform.position.x - 15f;
+        dir.x = transform.position.x - 30f;
 
 
         UpdateLine();

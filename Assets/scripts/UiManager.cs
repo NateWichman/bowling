@@ -179,7 +179,12 @@ public class UiManager : MonoBehaviour
     private void AddFrameText(string text, bool noBackground = false)
     {
         var frameObj = Instantiate(FrameText);
-        if (text == "" || noBackground)
+        if (text == "")
+        {
+            var img = frameObj.GetComponent<Image>();
+            img.enabled = false;
+        }
+        if (noBackground)
         {
             var img = frameObj.GetComponent<Image>();
             img.enabled = false;
