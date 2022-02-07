@@ -85,9 +85,9 @@ public class UiManager : MonoBehaviour
             GameObject.Destroy(child.gameObject);
         }
 
-        /*    var width = Grid.GetComponent<RectTransform>().rect.width;
-            var gridSize = (width / 4);
-            Grid.cellSize = new Vector2(gridSize, 30); */
+        /*  var width = Grid.GetComponent<RectTransform>().rect.width;
+          var gridSize = (width / 4);
+          Grid.cellSize = new Vector2(gridSize, 50); */
 
 
         var scores = new List<string>();
@@ -187,5 +187,6 @@ public class UiManager : MonoBehaviour
         var textObj = frameObj.GetComponentInChildren<TextMeshProUGUI>();
         textObj.SetText(text);
         frameObj.transform.parent = Grid.gameObject.transform;
+        frameObj.GetComponent<RectTransform>().localScale = new Vector3(1f, 1f, 1f);
     }
 }
