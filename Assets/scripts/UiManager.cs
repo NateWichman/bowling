@@ -56,12 +56,26 @@ public class UiManager : MonoBehaviour
     public void SetSubText(string text)
     {
         SubText.SetText(text);
+        StartCoroutine(FadeTextToZeroAlpha(1, SubText));
+    }
+
+    public IEnumerator FadeTextToZeroAlpha(float t, TextMeshProUGUI i)
+    {
+        yield return new WaitForSeconds(1);
+        i.color = new Color(i.color.r, i.color.g, i.color.b, 1);
+        while (i.color.a > 0.0f)
+        {
+            i.color = new Color(i.color.r, i.color.g, i.color.b, i.color.a - (Time.deltaTime / t));
+            yield return null;
+        }
+
+        SetSubText("");
+        i.color = new Color(i.color.r, i.color.g, i.color.b, 1);
     }
 
     public void Reset()
     {
         ScoreText.SetText("");
-        SubText.SetText("");
     }
 
     public void DisplayFrames(List<Frame> frames)
@@ -79,10 +93,13 @@ public class UiManager : MonoBehaviour
         var scores = new List<string>();
         var texts = new List<string>();
 
+
         for (var i = 0; i < frames.Count; i++)
         {
             var frame = frames.ElementAt(i);
             var text = "";
+
+            var isLastFrame = frames.Count - 1 == i;
 
             for (var j = 0; j < frame.shots.Count; j++)
             {
@@ -90,27 +107,27 @@ public class UiManager : MonoBehaviour
 
                 if (j == 0 && shot == 10)
                 {
-                    text += "X ";
+                    text += "X   ";
                 }
                 else if (j == 1 | j == 2)
                 {
                     var prevShot = frame.shots[0];
                     if ((prevShot + shot) == 10)
                     {
-                        text += "/ ";
+                        text += "/   ";
                     }
                     else if (shot == 10)
                     {
-                        text += "X ";
+                        text += "X   ";
                     }
                     else
                     {
-                        text += $"{shot} ";
+                        text += $"{shot}   ";
                     }
                 }
                 else
                 {
-                    text += $"{shot} ";
+                    text += $"{shot}   ";
                 }
             }
 
@@ -130,11 +147,11 @@ public class UiManager : MonoBehaviour
         }
         else
         {
-            AddFrameText("1");
-            AddFrameText("2");
-            AddFrameText("3");
+            AddFrameText("1", true);
+            AddFrameText("2", true);
+            AddFrameText("3", true);
         }
-        AddFrameText("");
+        AddFrameText("Total", true);
 
 
         var last4Texts = new List<string>();
@@ -152,25 +169,6 @@ public class UiManager : MonoBehaviour
         {
             AddFrameText("");
         }
-        AddFrameText("Total");
-
-
-        last4Texts = new List<string>();
-        for (var i = 0; i < 3; i++)
-        {
-            if (scores.Count >= 1)
-            {
-                last4Texts.Add(scores.ElementAt(scores.Count - 1));
-                scores.RemoveAt(scores.Count - 1);
-            }
-        }
-        last4Texts.Reverse();
-        last4Texts.ForEach(x => AddFrameText(x));
-        for (var i = 0; i < 3 - last4Texts.Count; i++)
-        {
-            AddFrameText("");
-        }
-
         var total = frames.Sum(x => x.totalScore);
 
         AddFrameText($"{ total }");
@@ -178,10 +176,10 @@ public class UiManager : MonoBehaviour
 
     }
 
-    private void AddFrameText(string text)
+    private void AddFrameText(string text, bool noBackground = false)
     {
         var frameObj = Instantiate(FrameText);
-        if (text == "")
+        if (text == "" || noBackground)
         {
             var img = frameObj.GetComponent<Image>();
             img.enabled = false;

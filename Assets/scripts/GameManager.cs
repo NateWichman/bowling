@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     private Score _score;
 
     private int _roundScore = 0;
+    private int _shotScore = 0;
 
     public float PinHeight = 4;
 
@@ -33,11 +34,12 @@ public class GameManager : MonoBehaviour
     public void PinFall()
     {
         _roundScore++;
-        if (_roundScore == 10)
+        _shotScore++;
+
+        if (_shotScore == 10)
         {
-            UIManager.SetSubText(isSecondThrow ? "spare" : "STRIKE!");
+            UIManager.SetSubText(isSecondThrow ? "Spare" : "STRIKE!");
         }
-        UIManager.SetScoreText(_roundScore);
     }
 
     void Start()
@@ -93,6 +95,7 @@ public class GameManager : MonoBehaviour
     {
         ResetBall();
         ResetPins();
+        _shotScore = 0;
         UIManager.Reset();
         isSecondThrow = false;
     }
@@ -106,6 +109,8 @@ public class GameManager : MonoBehaviour
         _score.OnShot(_roundScore);
         _roundScore = 0;
         UIManager.DisplayFrames(_score.GetFrames());
+
+
         GameObject.Destroy(BowlingBall);
         NextBall.SetActive(true);
         BowlingBall = NextBall;
