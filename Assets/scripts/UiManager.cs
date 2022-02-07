@@ -62,14 +62,14 @@ public class UiManager : MonoBehaviour
 
     public IEnumerator FadeTextToZeroAlpha(float t, TextMeshProUGUI i)
     {
-        yield return new WaitForSecondsRealtime(1);
-        i.color = new Color(i.color.r, i.color.g, i.color.b, 1);
-        while (i.color.a > 0.0f)
-        {
-            i.color = new Color(i.color.r, i.color.g, i.color.b, i.color.a - (Time.deltaTime / t));
-            yield return null;
-        }
-
+        yield return new WaitForSeconds(1);
+        /*  i.color = new Color(i.color.r, i.color.g, i.color.b, 1);
+          while (i.color.a > 0.0f)
+          {
+              i.color = new Color(i.color.r, i.color.g, i.color.b, i.color.a - (Time.deltaTime / t));
+              yield return null;
+          }
+   */
         SetSubText("");
         i.color = new Color(i.color.r, i.color.g, i.color.b, 1);
     }
