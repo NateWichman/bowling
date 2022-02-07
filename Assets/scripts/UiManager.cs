@@ -85,9 +85,9 @@ public class UiManager : MonoBehaviour
             GameObject.Destroy(child.gameObject);
         }
 
-        var width = Grid.GetComponent<RectTransform>().rect.width;
-        var gridSize = (width / 4);
-        Grid.cellSize = new Vector2(gridSize, 30);
+        /*    var width = Grid.GetComponent<RectTransform>().rect.width;
+            var gridSize = (width / 4);
+            Grid.cellSize = new Vector2(gridSize, 30); */
 
 
         var scores = new List<string>();
