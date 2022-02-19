@@ -112,9 +112,14 @@ public class Ball : MonoBehaviour
         if (Power > MaxPower)
         {
             Power = MaxPower;
+            _powerUnit = -1 * _powerUnit;
         }
-
-        var percent = (Power - MinPower) / _powerUnit;
+        else if (Power < MinPower)
+        {
+            Power = MinPower;
+            _powerUnit = -1 * _powerUnit;
+        }
+        var percent = (Power - MinPower) / Mathf.Abs(_powerUnit);
         UIManager.SetSlider((int)percent);
     }
 
@@ -124,8 +129,14 @@ public class Ball : MonoBehaviour
         if (spin > _maxSpin)
         {
             spin = _maxSpin;
+            _spinUnit = -1 * _spinUnit;
         }
-        var percent = (spin - _minSpin) / _spinUnit;
+        else if (spin < _minSpin)
+        {
+            spin = _minSpin;
+            _spinUnit = -1 * _spinUnit;
+        }
+        var percent = (spin - _minSpin) / Mathf.Abs(_spinUnit);
         UIManager.SetSecondarySlider((int)percent);
     }
 
