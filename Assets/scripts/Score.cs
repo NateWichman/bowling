@@ -188,6 +188,26 @@ public class Score
             10, 10, 10, 10, 10, 10, 10, 10, 6, 4, 10, 10,10
         };
         Score.RunTest(TwoSeventySix, 276);
+
+        var SixtyNine = new List<int> {
+            0, 9, 5, 0, 3, 5, 3, 1, 6, 1, 4, 3, 6, 0, 6, 3, 6, 0, 7, 1
+        };
+        Score.RunTest(SixtyNine, 69);
+
+        var OneFourtyNine = new List<int> {
+            10, 6, 3, 8, 0, 3, 6, 10, 10, 6, 0, 7, 1, 8, 2, 10, 10, 8
+        };
+        Score.RunTest(OneFourtyNine, 149);
+
+        var Eighty5 = new List<int> {
+            10, 1, 7, 3, 6, 6, 3, 4, 0, 10, 6, 1, 7, 0, 6, 0
+        };
+        Score.RunTest(Eighty5, 85);
+
+        var Eighty3 = new List<int> {
+            8,1,1,6,8,2,3,3,10,7,0,0,7,9,0,8,0
+        };
+        Score.RunTest(Eighty3, 83);
     }
 
     private static void RunTest(List<int> shots, int expectedScore)
