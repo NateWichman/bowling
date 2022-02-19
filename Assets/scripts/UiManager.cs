@@ -98,41 +98,8 @@ public class UiManager : MonoBehaviour
         for (var i = 0; i < frames.Count; i++)
         {
             var frame = frames.ElementAt(i);
-            var text = "";
 
-            var isLastFrame = frames.Count - 1 == i;
-
-            for (var j = 0; j < frame.shots.Count; j++)
-            {
-                var shot = frame.shots[j];
-
-                if (j == 0 && shot == 10)
-                {
-                    text += "X   ";
-                }
-                else if (j == 1 | j == 2)
-                {
-                    var prevShot = frame.shots[0];
-                    if ((prevShot + shot) == 10)
-                    {
-                        text += "/   ";
-                    }
-                    else if (shot == 10)
-                    {
-                        text += "X   ";
-                    }
-                    else
-                    {
-                        text += $"{shot}   ";
-                    }
-                }
-                else
-                {
-                    text += $"{shot}   ";
-                }
-            }
-
-            texts.Add(text);
+            texts.Add(frame.shotText);
             scores.Add($"{frame.totalScore}");
         }
 

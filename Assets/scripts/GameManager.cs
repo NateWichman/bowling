@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        Score.RunTests();
         NextPins = GameObject.Instantiate(Pins);
         NextPins.SetActive(false);
         NextBall = GameObject.Instantiate(BowlingBall);

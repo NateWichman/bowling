@@ -5,9 +5,21 @@ using UnityEngine;
 public class Frame
 {
     public List<int> shots;
+    public string shotText;
     public int totalScore;
     public bool isStrike;
     public bool isSpare;
+
+    public Frame(int numPins)
+    {
+        this.shots = new List<int>();
+        this.shots.Add(numPins);
+        this.totalScore = numPins;
+        this.isStrike = numPins == 10;
+        this.isSpare = false;
+
+        shotText = this.isStrike ? "X  " : numPins.ToString() + "  ";
+    }
 }
 
 public class Score
@@ -28,7 +40,12 @@ public class Score
 
         if (current.shots.Count == 3) return true;
 
-        if (current.shots.Count == 2 && (!current.isSpare || !current.isStrike)) return true;
+        if (current.shots.Count == 1) return false;
+
+        if (current.shots.Count == 2)
+        {
+            return current.shots.Sum(x => x) < 10;
+        }
 
         return false;
     }
@@ -37,85 +54,159 @@ public class Score
     {
         if (IsGameOver()) throw new System.Exception("GAME OVER");
 
-        // first shot of game
+        Frame currentFrame = CurrentFrame(numPins);
+        CalcPreviousStrikeSpare();
+    }
+
+    public int GetTotal()
+    {
+        return _frames.Sum(x => x.totalScore);
+    }
+    private void CalcPreviousStrikeSpare()
+    {
+        /* + Strikes get the score of the next two shots added to that frame's score.
+           + Spares get the score of only the next shot added to that frame's score.
+           + These are true, except in the tenth (last frame) where strikes / spares do 
+           not double any scores. They are just face value */
+
+        // There is not a previous shot to check for strikes / spares
+        if (_frames.Count < 2) return;
+
+        var prevFrame = _frames.ElementAt(_frames.Count - 2);
+        var currentFrame = _frames.Last();
+
+        // strike doubles next two shots. (gotta make sure its not the 3rd shot of the last frame, because that is more than 2 shots away from the last strike)
+        if (prevFrame.isStrike && currentFrame.shots.Count <= 2)
+        {
+            prevFrame.totalScore += currentFrame.shots.Last(); ;
+
+            // if its a strike, got to check the frame before as well
+            if (_frames.Count < 3) return;
+
+            var prevPrevFrame = _frames.ElementAt(_frames.Count - 3);
+
+            if (prevPrevFrame.isStrike && currentFrame.shots.Count < 2)
+            {
+                prevPrevFrame.totalScore += currentFrame.shots.Last();
+            }
+
+            return;
+        }
+        else if (prevFrame.isSpare && currentFrame.shots.Count == 1)
+        {
+            // spares double only the next shot (not two).
+            prevFrame.totalScore += currentFrame.shots.Last();
+        }
+
+
+    }
+
+    private Frame CurrentFrame(int numPins)
+    {
+        // first shot of the game
         if (_frames.Count == 0)
         {
-            _frames.Add(new Frame
-            {
-                shots = new List<int> { numPins },
-                totalScore = numPins,
-                isStrike = numPins == 10,
-                isSpare = false
-            });
-            return;
+            return AddFrame(numPins);
         }
 
         var currentFrame = _frames.Last();
 
-        // First shot in frame
-        if ((currentFrame.shots.Count == 2 || currentFrame.isStrike) && _frames.Count != 10)
+        // last frame acts differently
+        if (_frames.Count != 10)
         {
-            _frames.Add(new Frame
+            if (currentFrame.shots.Count == 2 || currentFrame.isStrike)
             {
-                shots = new List<int> { numPins },
-                totalScore = numPins,
-                isStrike = numPins == 10
-            });
-
-            // if previous frame was strike
-            if (_frames.Count >= 2)
-            {
-                var prevFrame = _frames.ElementAt(_frames.Count - 2);
-                if (prevFrame.isSpare || prevFrame.isStrike)
-                {
-                    prevFrame.totalScore += numPins;
-                }
-
-                if (prevFrame.isStrike && _frames.Count >= 3)
-                {
-                    var prevPrevFrame = _frames.ElementAt(_frames.Count - 3);
-                    if (prevPrevFrame.isStrike)
-                    {
-                        prevPrevFrame.totalScore += numPins;
-                    }
-                }
+                // frame is over.
+                return AddFrame(numPins);
             }
-        }
 
-        // Second shot in frame
-        if (currentFrame.shots.Count == 1 && (currentFrame.isStrike == false || _frames.Count == 10))
+            // frame is not over, add a shot
+            currentFrame.shots.Add(numPins);
+            currentFrame.totalScore += numPins;
+            currentFrame.isSpare = currentFrame.shots.Sum(x => x) == 10;
+            currentFrame.shotText += currentFrame.isSpare ? "/" : numPins.ToString();
+            return currentFrame;
+        }
+        else
         {
+            // is in last frame
+            if (currentFrame.shots.Count >= 3) throw new System.Exception("Trying to add score to a completed game");
+
+            // frame is not over, add a shot
             currentFrame.shots.Add(numPins);
             currentFrame.totalScore += numPins;
 
-            if (currentFrame.totalScore == 10)
+            if (numPins == 10)
             {
-                currentFrame.isSpare = true;
+                currentFrame.shotText += "X";
             }
-
-            // if previous frame was a strike, add this score.
-            if (_frames.Count >= 2)
+            else if (currentFrame.shots.Count == 2)
             {
-                var prevFrame = _frames.ElementAt(_frames.Count - 2);
-                if (prevFrame.isStrike)
+                if (currentFrame.shots.ElementAt(1) != 10 && (numPins + currentFrame.shots.ElementAt(1)) == 10)
                 {
-                    // got a strike
-                    prevFrame.totalScore += numPins;
+                    currentFrame.shotText += "/  ";
+                }
+                else
+                {
+                    currentFrame.shotText += numPins.ToString() + "  ";
                 }
             }
-        }
-
-
-        // final shot
-        if (currentFrame.shots.Count == 2 && _frames.Count == 10)
-        {
-            if (currentFrame.isStrike || currentFrame.isSpare)
+            else
             {
-                currentFrame.shots.Add(numPins);
+                currentFrame.shotText += numPins.ToString();
             }
+            // tenth frame does not count spares/strikes
+            return currentFrame;
+        }
+    }
+
+    private Frame AddFrame(int numPins)
+    {
+        var frame = new Frame(numPins);
+        _frames.Add(frame);
+        return frame;
+    }
+
+
+
+    public static void RunTests()
+    {
+        var threeHundred = new List<int> { 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10 };
+        Score.RunTest(threeHundred, 300);
+
+        var TwoOTwo = new List<int> {
+            10, 8, 2, 9, 1, 8, 0, 10, 10 ,9 ,1, 9, 1, 10, 10, 9, 1
+        };
+        Score.RunTest(TwoOTwo, 202);
+
+        var OneSixtyFour = new List<int> {
+            7, 3, 10, 10, 8, 1, 9, 1, 8, 1, 10, 9, 1, 8, 2, 6, 1
+        };
+        Score.RunTest(OneSixtyFour, 164);
+
+        var TwoSeventySix = new List<int> {
+            10, 10, 10, 10, 10, 10, 10, 10, 6, 4, 10, 10,10
+        };
+        Score.RunTest(TwoSeventySix, 276);
+    }
+
+    private static void RunTest(List<int> shots, int expectedScore)
+    {
+        var score = new Score();
+
+        foreach (var shot in shots)
+        {
+            score.OnShot(shot);
         }
 
-
-
+        if (score.GetTotal() == expectedScore)
+        {
+            Debug.Log($"Passed test expecting a score of: {expectedScore}");
+        }
+        else
+        {
+            Debug.Log($"FAILED test for: {expectedScore}. Got A score of: {score.GetTotal()}");
+        }
     }
 }
+
