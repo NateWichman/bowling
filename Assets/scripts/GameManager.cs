@@ -1,6 +1,7 @@
 ﻿
 using UnityEngine;
 using UnityEngine.Events;
+using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
@@ -105,9 +106,20 @@ public class GameManager : MonoBehaviour
         if (_score.IsGameOver())
         {
             _score = new Score();
+
+            try
+            {
+                AdManager.Instance.ShowIntersitialAd();
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e.Message);
+            }
         }
         _score.OnShot(_roundScore);
         _roundScore = 0;
+
+        var frames = _score.GetFrames();
         UIManager.DisplayFrames(_score.GetFrames());
 
 
@@ -119,6 +131,22 @@ public class GameManager : MonoBehaviour
         Resetting.Invoke();
         BallIsThrowing = false;
         Panel.SetActive(true);
+
+
+
+        // show ad after 5th frame
+        if (frames.Count == 5 && (frames.Last().shots.Count == 2 || frames.Last().isStrike))
+        {
+            try
+            {
+                AdManager.Instance.ShowIntersitialAd();
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError(e.Message);
+            }
+        }
+
     }
 
     private void ResetPins()
