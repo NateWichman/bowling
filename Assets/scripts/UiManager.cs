@@ -9,6 +9,8 @@ public class UiManager : MonoBehaviour
     public TextMeshProUGUI ScoreText;
     public TextMeshProUGUI SubText;
     public TextMeshProUGUI EndGameTotal;
+    public TextMeshProUGUI HighScoreNum;
+    public TextMeshProUGUI HighScoreText;
 
     public GameObject FrameText;
     public GameObject FrameText2;
@@ -24,11 +26,27 @@ public class UiManager : MonoBehaviour
         slider.maxValue = 100;
         secondarySlider.minValue = 0;
         secondarySlider.maxValue = 100;
+        HighScoreText.enabled = false;
     }
 
     public void SetEndGameTotal(int score)
     {
         EndGameTotal.SetText(score.ToString());
+    }
+
+    public void HideHighscoreText()
+    {
+        HighScoreText.enabled = false;
+    }
+
+    public void OnHighScore()
+    {
+        HighScoreText.enabled = true;
+    }
+
+    public void SetHighScore(int score)
+    {
+        HighScoreNum.SetText(score.ToString());
     }
 
     public void SetScoreText(int score)

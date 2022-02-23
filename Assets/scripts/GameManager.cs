@@ -112,6 +112,19 @@ public class GameManager : MonoBehaviour
     {
         EndGamePanel.SetActive(true);
         Panel.SetActive(false);
+        int highscore = PlayerPrefs.GetInt("HIGH_SCORE");
+        ;
+        if (_score.GetTotal() > highscore)
+        {
+            UIManager.OnHighScore();
+            UIManager.SetHighScore(_score.GetTotal());
+            PlayerPrefs.SetInt("HIGH_SCORE", _score.GetTotal());
+        }
+        else
+        {
+            UIManager.SetHighScore(highscore);
+        }
+
         UIManager.SetEndGameTotal(_score.GetTotal());
     }
 
@@ -121,6 +134,7 @@ public class GameManager : MonoBehaviour
         ResetPins();
         _shotScore = 0;
         isSecondThrow = false;
+        UIManager.HideHighscoreText();
         EndGamePanel.SetActive(false);
         Panel.SetActive(true);
     }
