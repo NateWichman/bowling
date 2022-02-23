@@ -8,6 +8,7 @@ public class UiManager : MonoBehaviour
 {
     public TextMeshProUGUI ScoreText;
     public TextMeshProUGUI SubText;
+    public TextMeshProUGUI EndGameTotal;
 
     public GameObject FrameText;
     public GameObject FrameText2;
@@ -23,6 +24,11 @@ public class UiManager : MonoBehaviour
         slider.maxValue = 100;
         secondarySlider.minValue = 0;
         secondarySlider.maxValue = 100;
+    }
+
+    public void SetEndGameTotal(int score)
+    {
+        EndGameTotal.SetText(score.ToString());
     }
 
     public void SetScoreText(int score)
@@ -74,10 +80,7 @@ public class UiManager : MonoBehaviour
         i.color = new Color(i.color.r, i.color.g, i.color.b, 1);
     }
 
-    public void Reset()
-    {
-        ScoreText.SetText("");
-    }
+
 
     public void DisplayFrames(List<Frame> frames)
     {

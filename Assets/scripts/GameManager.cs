@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
 
     public GameObject Panel;
 
+    public GameObject EndGamePanel;
+
     private Score _score;
 
     private int _roundScore = 0;
@@ -50,6 +52,8 @@ public class GameManager : MonoBehaviour
         NextBall = GameObject.Instantiate(BowlingBall);
         NextBall.SetActive(false);
         Resetting = new UnityEvent();
+        EndGamePanel.SetActive(false);
+        Panel.SetActive(true);
     }
 
     // Update is called once per frame
@@ -95,25 +99,40 @@ public class GameManager : MonoBehaviour
     private void Reset()
     {
         ResetBall();
-        ResetPins();
+
+        if (!_score.IsGameOver())
+        {
+            ResetPins();
+        }
         _shotScore = 0;
         isSecondThrow = false;
     }
 
+    private void EndGame()
+    {
+        EndGamePanel.SetActive(true);
+        Panel.SetActive(false);
+        UIManager.SetEndGameTotal(_score.GetTotal());
+    }
+
+    public void NewGame()
+    {
+        _score = new Score();
+        ResetPins();
+        _shotScore = 0;
+        isSecondThrow = false;
+        EndGamePanel.SetActive(false);
+        Panel.SetActive(true);
+    }
+
     private void ResetBall()
     {
-        if (_score.IsGameOver())
-        {
-            _score = new Score();
-        }
         _score.OnShot(_roundScore);
         _roundScore = 0;
 
 
         if (_score.IsGameOver())
         {
-            ResetPins();
-            isSecondThrow = false;
             try
             {
                 AdManager.Instance.ShowIntersitialAd();
@@ -135,9 +154,16 @@ public class GameManager : MonoBehaviour
         NextBall.SetActive(false);
         Resetting.Invoke();
         BallIsThrowing = false;
-        Panel.SetActive(true);
 
-
+        if (!_score.IsGameOver())
+        {
+            Panel.SetActive(true);
+        }
+        else
+        {
+            // is game over
+            EndGame();
+        }
 
         // show ad after 5th frame
         if (frames.Count == 5 && (frames.Last().shots.Count == 2 || frames.Last().isStrike))
