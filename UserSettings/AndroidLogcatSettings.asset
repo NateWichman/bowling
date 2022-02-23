@@ -1,9 +1,9 @@
 {
     "m_SelectedDeviceId": "12171JEC203497",
     "m_SelectedPackage": {
-        "deviceId": "12171JEC203497",
-        "name": "com.DefaultCompany.bowling",
-        "processId": 4864,
+        "deviceId": "",
+        "name": "",
+        "processId": 0,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -12,18 +12,36 @@
             "deviceId": "12171JEC203497",
             "name": "com.instagram.android",
             "processId": 29671,
-            "exited": false
+            "exited": true
         },
         {
             "deviceId": "12171JEC203497",
             "name": "com.DefaultCompany.bowling",
             "processId": 13241,
-            "exited": false
+            "exited": true
         },
         {
             "deviceId": "12171JEC203497",
             "name": "com.DefaultCompany.bowling",
             "processId": 4864,
+            "exited": true
+        },
+        {
+            "deviceId": "12171JEC203497",
+            "name": "com.DefaultCompany.bowling",
+            "processId": 5594,
+            "exited": true
+        },
+        {
+            "deviceId": "12171JEC203497",
+            "name": "com.StoneBison.Bowling",
+            "processId": 13478,
+            "exited": true
+        },
+        {
+            "deviceId": "12171JEC203497",
+            "name": "com.instagram.android",
+            "processId": 16701,
             "exited": false
         }
     ],

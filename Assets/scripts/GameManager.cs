@@ -97,7 +97,6 @@ public class GameManager : MonoBehaviour
         ResetBall();
         ResetPins();
         _shotScore = 0;
-        UIManager.Reset();
         isSecondThrow = false;
     }
 
@@ -106,7 +105,15 @@ public class GameManager : MonoBehaviour
         if (_score.IsGameOver())
         {
             _score = new Score();
+        }
+        _score.OnShot(_roundScore);
+        _roundScore = 0;
 
+
+        if (_score.IsGameOver())
+        {
+            ResetPins();
+            isSecondThrow = false;
             try
             {
                 AdManager.Instance.ShowIntersitialAd();
@@ -116,8 +123,6 @@ public class GameManager : MonoBehaviour
                 Debug.LogError(e.Message);
             }
         }
-        _score.OnShot(_roundScore);
-        _roundScore = 0;
 
         var frames = _score.GetFrames();
         UIManager.DisplayFrames(_score.GetFrames());
