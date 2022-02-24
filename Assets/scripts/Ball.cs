@@ -100,7 +100,7 @@ public class Ball : MonoBehaviour
         direction = -direction.normalized;
         var force = (direction) * Power * rb.mass;
         rb.AddForce(force);
-        rb.AddTorque(new Vector3(-1, 0, 0) * spin * rb.mass);
+        rb.AddTorque(new Vector3(-1, 0, 0) * spin * (InputService.Instance.SpinDirection == Direction.RIGHT ? 1 : -1) * rb.mass);
         _audioSource.Play();
 
         StartCoroutine("Timeout");

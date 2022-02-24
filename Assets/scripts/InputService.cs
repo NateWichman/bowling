@@ -11,13 +11,20 @@ public enum InputType
     RIGHT,
     LEFT,
     UPPER_RIGHT,
-    UPPER_LEFT
+    UPPER_LEFT,
+    TOGGLE_SPIN
 }
 
 public struct InputEventStruct
 {
     public InputType Type;
     public bool IsDown;
+}
+
+public enum Direction
+{
+    RIGHT,
+    LEFT
 }
 
 public class InputService : MonoBehaviour
@@ -31,6 +38,10 @@ public class InputService : MonoBehaviour
     public bool IsUpperLeftDown = false;
 
     public bool IsSpinDown = false;
+
+    public Direction SpinDirection = Direction.RIGHT;
+
+    public bool IsToggleSpinDown = false;
 
     public UnityEvent<InputEventStruct> InputEvent;
 
@@ -126,6 +137,20 @@ public class InputService : MonoBehaviour
         InputEvent.Invoke(new InputEventStruct
         {
             Type = InputType.UPPER_LEFT,
+            IsDown = isDown
+        });
+    }
+
+    public void ToggleSpin(bool isDown)
+    {
+        if (isDown)
+        {
+            SpinDirection = SpinDirection == Direction.RIGHT ? Direction.LEFT : Direction.RIGHT;
+        }
+        IsToggleSpinDown = isDown;
+        InputEvent.Invoke(new InputEventStruct
+        {
+            Type = InputType.TOGGLE_SPIN,
             IsDown = isDown
         });
     }

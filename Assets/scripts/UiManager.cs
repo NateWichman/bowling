@@ -12,8 +12,12 @@ public class UiManager : MonoBehaviour
     public TextMeshProUGUI HighScoreNum;
     public TextMeshProUGUI HighScoreText;
 
+    public GameObject SpinDirectionBtn;
+
     public GameObject FrameText;
     public GameObject FrameText2;
+
+    public Image LeftImage;
 
     public GridLayoutGroup Grid;
 
@@ -27,6 +31,12 @@ public class UiManager : MonoBehaviour
         secondarySlider.minValue = 0;
         secondarySlider.maxValue = 100;
         HighScoreText.enabled = false;
+        InputService.Instance.InputEvent.AddListener(ToggleSpinDirection);
+    }
+
+    void Destroy()
+    {
+        InputService.Instance.InputEvent.RemoveListener(ToggleSpinDirection);
     }
 
     public void SetEndGameTotal(int score)
@@ -181,5 +191,23 @@ public class UiManager : MonoBehaviour
         textObj.SetText(text);
         frameObj.transform.parent = Grid.gameObject.transform;
         frameObj.GetComponent<RectTransform>().localScale = new Vector3(1f, 1f, 1f);
+    }
+
+
+    private void ToggleSpinDirection(InputEventStruct dir)
+    {
+        if (dir.Type != InputType.TOGGLE_SPIN || dir.IsDown)
+        {
+            return;
+        }
+
+        var rightImg = SpinDirectionBtn.GetComponent<Image>();
+
+        rightImg.enabled = InputService.Instance.SpinDirection == Direction.RIGHT;
+        LeftImage.enabled = InputService.Instance.SpinDirection == Direction.LEFT;
+
+        SpinDirectionBtn.GetComponentInChildren<TextMeshProUGUI>().SetText(
+            InputService.Instance.SpinDirection == Direction.RIGHT ? "Right" : "Left"
+        );
     }
 }
