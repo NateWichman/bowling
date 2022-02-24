@@ -193,7 +193,7 @@ public class Ball : MonoBehaviour
 
     IEnumerator Timeout()
     {
-        yield return new WaitForSeconds(13f);
+        yield return new WaitForSeconds(20f);
         GameManager.Instance.ForceBallFall();
     }
 }

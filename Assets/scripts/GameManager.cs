@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour
             if (a.isPlaying)
                 a.Stop();
         }
-        if (BowlingBall.transform.position.y < -100f)
+        if (BowlingBall.transform.position.y < -150f)
         {
             RoundOver();
         }
@@ -229,5 +229,11 @@ public class GameManager : MonoBehaviour
     public void ForceBallFall()
     {
         RoundOver();
+    }
+
+    public void OnRate()
+    {
+        PlayerPrefs.SetInt("HAS_RATED", 1);
+        Application.OpenURL("https://play.google.com/store/apps/details?id=com.StoneBison.Bowling");
     }
 }

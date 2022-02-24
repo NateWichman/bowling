@@ -10,18 +10,6 @@
     "m_KnownPackagesForSerialization": [
         {
             "deviceId": "12171JEC203497",
-            "name": "com.instagram.android",
-            "processId": 29671,
-            "exited": true
-        },
-        {
-            "deviceId": "12171JEC203497",
-            "name": "com.DefaultCompany.bowling",
-            "processId": 13241,
-            "exited": true
-        },
-        {
-            "deviceId": "12171JEC203497",
             "name": "com.DefaultCompany.bowling",
             "processId": 4864,
             "exited": true
@@ -42,6 +30,18 @@
             "deviceId": "12171JEC203497",
             "name": "com.instagram.android",
             "processId": 16701,
+            "exited": true
+        },
+        {
+            "deviceId": "12171JEC203497",
+            "name": "com.android.chrome",
+            "processId": 12085,
+            "exited": true
+        },
+        {
+            "deviceId": "12171JEC203497",
+            "name": "com.google.android.apps.nexuslauncher",
+            "processId": 18460,
             "exited": false
         }
     ],

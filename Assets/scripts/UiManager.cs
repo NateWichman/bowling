@@ -11,6 +11,7 @@ public class UiManager : MonoBehaviour
     public TextMeshProUGUI EndGameTotal;
     public TextMeshProUGUI HighScoreNum;
     public TextMeshProUGUI HighScoreText;
+    public GameObject RateContainer;
 
     public GameObject SpinDirectionBtn;
 
@@ -32,6 +33,12 @@ public class UiManager : MonoBehaviour
         secondarySlider.maxValue = 100;
         HighScoreText.enabled = false;
         InputService.Instance.InputEvent.AddListener(ToggleSpinDirection);
+
+        int hasRated = PlayerPrefs.GetInt("HAS_RATED");
+        if (hasRated == 1)
+        {
+            Destroy(RateContainer);
+        }
     }
 
     void Destroy()
