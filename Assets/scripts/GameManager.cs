@@ -84,6 +84,7 @@ public class GameManager : MonoBehaviour
     {
         CustomizePanel.SetActive(false);
         Panel.SetActive(true);
+        GameObject.FindGameObjectWithTag("CUSTOMIZE_BALL").GetComponent<CustomizeIcon>().UpdateColor();
     }
     private void FirstThrowDone()
     {
@@ -256,4 +257,5 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetString("BALL", material.name);
         GameObject.FindGameObjectWithTag("BALL").GetComponent<Renderer>().material = material;
     }
+
 }
