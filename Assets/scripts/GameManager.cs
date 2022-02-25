@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     public CameraFollow cameraFollow;
 
     public GameObject Panel;
+    public GameObject CustomizePanel;
 
     public GameObject EndGamePanel;
 
@@ -54,6 +55,7 @@ public class GameManager : MonoBehaviour
         Resetting = new UnityEvent();
         EndGamePanel.SetActive(false);
         Panel.SetActive(true);
+        CustomizePanel.SetActive(false);
     }
 
     // Update is called once per frame
@@ -71,6 +73,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
+    public void OnCustomize()
+    {
+        CustomizePanel.SetActive(true);
+        Panel.SetActive(false);
+    }
+
+    public void OnEndCustomize()
+    {
+        CustomizePanel.SetActive(true);
+        Panel.SetActive(false);
+    }
     private void FirstThrowDone()
     {
 
