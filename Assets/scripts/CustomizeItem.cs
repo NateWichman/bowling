@@ -20,6 +20,8 @@ public class CustomizeItem : MonoBehaviour
 
     private Material _material;
 
+    private bool _isLocked = true;
+
 
     public void Initialize(
         string name,
@@ -28,6 +30,7 @@ public class CustomizeItem : MonoBehaviour
         Material material
     )
     {
+        _isLocked = locked;
         _material = material;
         _nameText.SetText(name);
         _subText.SetText(subtext);
@@ -38,6 +41,8 @@ public class CustomizeItem : MonoBehaviour
 
     public void SetMaterial()
     {
+        if (_isLocked) return;
+
         GameManager.Instance.SetMaterial(_material);
         GameManager.Instance.OnEndCustomize();
     }

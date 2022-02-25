@@ -11,6 +11,7 @@ public class CustomizeIcon : MonoBehaviour
 
     public void UpdateColor()
     {
+
         var materialName = PlayerPrefs.GetString("BALL");
         if (materialName == null || materialName == "")
         {

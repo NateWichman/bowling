@@ -76,7 +76,6 @@ public class Ball : MonoBehaviour
 
     void Destroy()
     {
-        Debug.Log("destorying");
         _inputService.InputEvent.RemoveListener(InputEvent);
     }
 

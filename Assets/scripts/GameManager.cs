@@ -162,6 +162,7 @@ public class GameManager : MonoBehaviour
 
         if (_score.IsGameOver())
         {
+            UnlockManager.Instance.UpdateUnlocks(_score);
             try
             {
                 AdManager.Instance.ShowIntersitialAd();

@@ -193,8 +193,6 @@ public class UiManager : MonoBehaviour
 
     private void AddFrameText(string text, bool noBackground = false)
     {
-
-        Debug.Log("text: " + text);
         GameObject frameObj;
 
         if (noBackground || text == "")
