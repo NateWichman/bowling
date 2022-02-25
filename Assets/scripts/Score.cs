@@ -18,7 +18,7 @@ public class Frame
         this.isStrike = numPins == 10;
         this.isSpare = false;
 
-        shotText = this.isStrike ? "X  " : numPins.ToString() + "  ";
+        shotText = this.isStrike ? "X  " : Score.NumPinsText(numPins) + "  ";
     }
 }
 
@@ -124,7 +124,7 @@ public class Score
             currentFrame.shots.Add(numPins);
             currentFrame.totalScore += numPins;
             currentFrame.isSpare = currentFrame.shots.Sum(x => x) == 10;
-            currentFrame.shotText += currentFrame.isSpare ? "/" : numPins.ToString();
+            currentFrame.shotText += currentFrame.isSpare ? "/" : NumPinsText(numPins);
             return currentFrame;
         }
         else
@@ -148,12 +148,12 @@ public class Score
                 }
                 else
                 {
-                    currentFrame.shotText += numPins.ToString() + "  ";
+                    currentFrame.shotText += NumPinsText(numPins) + "  ";
                 }
             }
             else
             {
-                currentFrame.shotText += numPins.ToString();
+                currentFrame.shotText += NumPinsText(numPins);
             }
             // tenth frame does not count spares/strikes
             return currentFrame;
@@ -227,6 +227,15 @@ public class Score
         {
             Debug.Log($"FAILED test for: {expectedScore}. Got A score of: {score.GetTotal()}");
         }
+    }
+
+    public static string NumPinsText(int numPins)
+    {
+        if (numPins == 0)
+        {
+            return "-";
+        }
+        return numPins.ToString();
     }
 }
 
