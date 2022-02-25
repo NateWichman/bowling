@@ -23,8 +23,8 @@ public struct InputEventStruct
 
 public enum Direction
 {
-    RIGHT,
-    LEFT
+    RIGHT = 1,
+    LEFT = 2
 }
 
 public class InputService : MonoBehaviour
@@ -39,16 +39,17 @@ public class InputService : MonoBehaviour
 
     public bool IsSpinDown = false;
 
-    public Direction SpinDirection = Direction.RIGHT;
+    public Direction SpinDirection;
 
     public bool IsToggleSpinDown = false;
 
     public UnityEvent<InputEventStruct> InputEvent;
 
-    public InputService()
+    private void Awake()
     {
         Instance = this;
         InputEvent = new UnityEvent<InputEventStruct>();
+        SpinDirection = Direction.LEFT;
     }
 
     public void PrimaryDown()
@@ -145,6 +146,7 @@ public class InputService : MonoBehaviour
     {
         if (isDown)
         {
+            Debug.Log("RUN");
             SpinDirection = SpinDirection == Direction.RIGHT ? Direction.LEFT : Direction.RIGHT;
         }
         IsToggleSpinDown = isDown;

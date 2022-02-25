@@ -39,6 +39,15 @@ public class UiManager : MonoBehaviour
         {
             Destroy(RateContainer);
         }
+
+        var rightImg = SpinDirectionBtn.GetComponent<Image>();
+
+        rightImg.enabled = InputService.Instance.SpinDirection == Direction.RIGHT;
+        LeftImage.enabled = InputService.Instance.SpinDirection == Direction.LEFT;
+
+        SpinDirectionBtn.GetComponentInChildren<TextMeshProUGUI>().SetText(
+          InputService.Instance.SpinDirection == Direction.RIGHT ? "Right" : "Left"
+      );
     }
 
     void Destroy()
