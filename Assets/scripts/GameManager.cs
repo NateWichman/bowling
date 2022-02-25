@@ -82,8 +82,8 @@ public class GameManager : MonoBehaviour
 
     public void OnEndCustomize()
     {
-        CustomizePanel.SetActive(true);
-        Panel.SetActive(false);
+        CustomizePanel.SetActive(false);
+        Panel.SetActive(true);
     }
     private void FirstThrowDone()
     {
@@ -249,5 +249,11 @@ public class GameManager : MonoBehaviour
     {
         PlayerPrefs.SetInt("HAS_RATED", 1);
         Application.OpenURL("https://play.google.com/store/apps/details?id=com.StoneBison.Bowling");
+    }
+
+    public void SetMaterial(Material material)
+    {
+        PlayerPrefs.SetString("BALL", material.name);
+        GameObject.FindGameObjectWithTag("BALL").GetComponent<Renderer>().material = material;
     }
 }

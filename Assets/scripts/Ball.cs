@@ -31,6 +31,7 @@ public class Ball : MonoBehaviour
 
     void Start()
     {
+
         _inputService = InputService.Instance;
         _inputService.InputEvent.AddListener(InputEvent);
         rb = GetComponent<Rigidbody>();
@@ -57,6 +58,20 @@ public class Ball : MonoBehaviour
 
         UpdateLine();
 
+        LoadMaterial();
+    }
+
+    void LoadMaterial()
+    {
+        string ball = PlayerPrefs.GetString("BALL");
+
+        if (ball == null || ball == "")
+        {
+            ball = "HouseBall";
+        }
+
+        Material material = Resources.Load<Material>("Balls/" + ball);
+        GetComponent<Renderer>().material = material;
     }
 
     void Destroy()

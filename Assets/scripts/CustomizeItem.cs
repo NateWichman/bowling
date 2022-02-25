@@ -18,6 +18,8 @@ public class CustomizeItem : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI _subText;
 
+    private Material _material;
+
 
     public void Initialize(
         string name,
@@ -26,10 +28,17 @@ public class CustomizeItem : MonoBehaviour
         Material material
     )
     {
-
+        _material = material;
         _nameText.SetText(name);
         _subText.SetText(subtext);
         _lockIcon.SetActive(locked);
         _ball.GetComponent<Renderer>().material = material;
+    }
+
+
+    public void SetMaterial()
+    {
+        GameManager.Instance.SetMaterial(_material);
+        GameManager.Instance.OnEndCustomize();
     }
 }
