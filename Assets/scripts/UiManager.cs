@@ -193,6 +193,8 @@ public class UiManager : MonoBehaviour
 
     private void AddFrameText(string text, bool noBackground = false)
     {
+
+        Debug.Log("text: " + text);
         GameObject frameObj;
 
         if (noBackground || text == "")
@@ -205,8 +207,8 @@ public class UiManager : MonoBehaviour
         }
         var textObj = frameObj.GetComponentInChildren<TextMeshProUGUI>();
         textObj.SetText(text);
-        frameObj.transform.parent = Grid.gameObject.transform;
-        frameObj.GetComponent<RectTransform>().localScale = new Vector3(1f, 1f, 1f);
+        frameObj.transform.SetParent(Grid.gameObject.transform, false);
+
     }
 
 
