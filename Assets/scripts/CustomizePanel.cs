@@ -33,6 +33,7 @@ public class CustomizePanel : MonoBehaviour
         new Item("Bronze", "Score at least 100 points", true, Resources.Load<Material>("Balls/Bronze")),
         new Item("Silver", "Score at least 150 points", true, Resources.Load<Material>("Balls/Silver")),
         new Item("Gold", "Score at least 200 points", true, Resources.Load<Material>("Balls/Gold")),
+        new Item("Emerald", "Score at least 250", true, Resources.Load<Material>("Balls/Emerald")),
         new Item("Diamond", "Score a perfect 300", true, Resources.Load<Material>("Balls/Diamond"))
     };
 
