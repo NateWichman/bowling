@@ -57,12 +57,26 @@ public class Ball : MonoBehaviour
 
         UpdateLine();
 
+        LoadMaterial();
     }
 
     void Destroy()
     {
         Debug.Log("destorying");
         _inputService.InputEvent.RemoveListener(InputEvent);
+    }
+
+    void LoadMaterial()
+    {
+        string ball = PlayerPrefs.GetString("BALL");
+
+        if (ball == null || ball == "")
+        {
+            ball = "HouseBall";
+        }
+
+        Material material = Resources.Load<Material>("Balls/" + ball);
+        GetComponent<Renderer>().material = material;
     }
 
     private void InputEvent(InputEventStruct data)

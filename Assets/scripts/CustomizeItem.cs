@@ -17,6 +17,7 @@ public class CustomizeItem : MonoBehaviour
 
     [SerializeField]
     private TextMeshProUGUI _subText;
+    private Material _material;
 
 
     public void Initialize(
@@ -31,5 +32,12 @@ public class CustomizeItem : MonoBehaviour
         _subText.SetText(subtext);
         _lockIcon.SetActive(locked);
         _ball.GetComponent<Renderer>().material = material;
+        _material = material;
+    }
+
+    public void SetMaterial()
+    {
+        GameManager.Instance.SetMaterial(_material);
+        GameManager.Instance.OnEndCustomize();
     }
 }
