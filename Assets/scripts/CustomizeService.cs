@@ -10,6 +10,7 @@ public enum KeyEnum
     Silver = 2,
     Gold = 3,
     Moon = 4,
+    Earth = 5,
 }
 
 public class CustomizeService : MonoBehaviour
@@ -39,5 +40,6 @@ public class CustomizeService : MonoBehaviour
         Unlocks.Add(KeyEnum.Silver, score >= 150);
         Unlocks.Add(KeyEnum.Gold, score >= 200);
         Unlocks.Add(KeyEnum.Moon, numGamesPlayed >= 10);
+        Unlocks.Add(KeyEnum.Earth, numGamesPlayed >= 100);
     }
 }
