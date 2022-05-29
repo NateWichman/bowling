@@ -135,6 +135,10 @@ public class GameManager : MonoBehaviour
         {
             PlayerPrefs.SetInt("IS_GHOST", 1);
         }
+        if (_score.GetTotal() == 9)
+        {
+            PlayerPrefs.SetInt("IS_POOL_BALL", 1);
+        }
 
         if (_score.GetTotal() > highscore)
         {
