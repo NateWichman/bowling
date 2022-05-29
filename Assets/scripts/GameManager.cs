@@ -131,6 +131,11 @@ public class GameManager : MonoBehaviour
         int numGamesPlayed = PlayerPrefs.GetInt("NUM_GAMES_PLAYED", 0);
         PlayerPrefs.SetInt("NUM_GAMES_PLAYED", numGamesPlayed + 1);
 
+        if (_score.GetTotal() == 0)
+        {
+            PlayerPrefs.SetInt("IS_GHOST", 1);
+        }
+
         if (_score.GetTotal() > highscore)
         {
             UIManager.OnHighScore();
