@@ -51,9 +51,10 @@ public class CustomizePanel : MonoBehaviour
 
         _items = new List<Item> {
         new Item("House Ball", "", false, Resources.Load<Material>("Balls/HouseBall")),
-        new Item("Bronze", "Score at least 100 points", _customizeService.Unlocks[KeyEnum.Bronze], Resources.Load<Material>("Balls/Bronze")),
-        new Item("Silver", "Score at least 150 points", _customizeService.Unlocks[KeyEnum.Silver], Resources.Load<Material>("Balls/Silver")),
-        new Item("Gold", "Score at least 200 points", _customizeService.Unlocks[KeyEnum.Gold], Resources.Load<Material>("Balls/Gold"))
+        new Item("Bronze", "Score at least 100 points", !_customizeService.Unlocks[KeyEnum.Bronze], Resources.Load<Material>("Balls/Bronze")),
+        new Item("Silver", "Score at least 150 points", !_customizeService.Unlocks[KeyEnum.Silver], Resources.Load<Material>("Balls/Silver")),
+        new Item("Gold", "Score at least 200 points", !_customizeService.Unlocks[KeyEnum.Gold], Resources.Load<Material>("Balls/Gold")),
+        new Item("Moon", "Play 10 Games", !_customizeService.Unlocks[KeyEnum.Moon], Resources.Load<Material>("Balls/Moon"))
     };
 
         _items.ForEach(item => AddItem(item));

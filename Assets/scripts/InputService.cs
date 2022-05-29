@@ -146,7 +146,6 @@ public class InputService : MonoBehaviour
     {
         if (isDown)
         {
-            Debug.Log("RUN");
             SpinDirection = SpinDirection == Direction.RIGHT ? Direction.LEFT : Direction.RIGHT;
         }
         IsToggleSpinDown = isDown;

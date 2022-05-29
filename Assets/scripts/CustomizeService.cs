@@ -9,6 +9,7 @@ public enum KeyEnum
     Bronze = 1,
     Silver = 2,
     Gold = 3,
+    Moon = 4,
 }
 
 public class CustomizeService : MonoBehaviour
@@ -30,10 +31,13 @@ public class CustomizeService : MonoBehaviour
     public void InitUnlocks()
     {
         int score = PlayerPrefs.GetInt("HIGH_SCORE", 0);
+        int numGamesPlayed = PlayerPrefs.GetInt("NUM_GAMES_PLAYED", 0);
+        Debug.Log("numsplayd " + numGamesPlayed);
         Unlocks = new Dictionary<KeyEnum, bool>();
 
         Unlocks.Add(KeyEnum.Bronze, score >= 100);
         Unlocks.Add(KeyEnum.Silver, score >= 150);
         Unlocks.Add(KeyEnum.Gold, score >= 200);
+        Unlocks.Add(KeyEnum.Moon, numGamesPlayed >= 10);
     }
 }

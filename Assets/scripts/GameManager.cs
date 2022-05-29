@@ -128,7 +128,9 @@ public class GameManager : MonoBehaviour
         EndGamePanel.SetActive(true);
         Panel.SetActive(false);
         int highscore = PlayerPrefs.GetInt("HIGH_SCORE");
-        ;
+        int numGamesPlayed = PlayerPrefs.GetInt("NUM_GAMES_PLAYED", 0);
+        PlayerPrefs.SetInt("NUM_GAMES_PLAYED", numGamesPlayed + 1);
+
         if (_score.GetTotal() > highscore)
         {
             UIManager.OnHighScore();
@@ -255,7 +257,6 @@ public class GameManager : MonoBehaviour
     public void SetMaterial(Material material)
     {
         PlayerPrefs.SetString("BALL", material.name);
-        Debug.Log(material.name);
         GameObject.FindGameObjectWithTag("BALL").GetComponent<Renderer>().material = material;
         OnEndCustomize();
     }

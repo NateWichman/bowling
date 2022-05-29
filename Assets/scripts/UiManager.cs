@@ -186,7 +186,7 @@ public class UiManager : MonoBehaviour
         }
         var total = frames.Sum(x => x.totalScore);
 
-        AddFrameText($"{ total }");
+        AddFrameText($"{total}");
 
 
     }
@@ -194,7 +194,6 @@ public class UiManager : MonoBehaviour
     private void AddFrameText(string text, bool noBackground = false)
     {
 
-        Debug.Log("text: " + text);
         GameObject frameObj;
 
         if (noBackground || text == "")
