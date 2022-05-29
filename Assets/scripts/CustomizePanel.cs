@@ -8,6 +8,10 @@ public class CustomizePanel : MonoBehaviour
     [SerializeField]
     private GameObject _cell;
 
+    private CustomizeService _customizeService;
+
+    public static CustomizePanel Instance;
+
     private class Item
     {
         public string Name;
@@ -25,14 +29,31 @@ public class CustomizePanel : MonoBehaviour
     };
 
     private List<Item> _items;
-    // Start is called before the first frame update
+
+    void Awake()
+    {
+        Instance = this;
+    }
+
+
     void Start()
     {
+        _customizeService = CustomizeService.Instance;
+        RefreshUI();
+    }
+
+    public void RefreshUI()
+    {
+        foreach (Transform child in transform)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
+
         _items = new List<Item> {
         new Item("House Ball", "", false, Resources.Load<Material>("Balls/HouseBall")),
-        new Item("Bronze", "Score at least 100 points", true, Resources.Load<Material>("Balls/Bronze")),
-        new Item("Bronze", "Score at least 150 points", true, Resources.Load<Material>("Balls/Silver")),
-        new Item("Bronze", "Score at least 200 points", true, Resources.Load<Material>("Balls/Gold"))
+        new Item("Bronze", "Score at least 100 points", _customizeService.Unlocks[KeyEnum.Bronze], Resources.Load<Material>("Balls/Bronze")),
+        new Item("Silver", "Score at least 150 points", _customizeService.Unlocks[KeyEnum.Silver], Resources.Load<Material>("Balls/Silver")),
+        new Item("Gold", "Score at least 200 points", _customizeService.Unlocks[KeyEnum.Gold], Resources.Load<Material>("Balls/Gold"))
     };
 
         _items.ForEach(item => AddItem(item));
@@ -41,6 +62,7 @@ public class CustomizePanel : MonoBehaviour
 
     private void AddItem(Item item)
     {
+
         var obj = Instantiate(_cell);
         obj.GetComponent<CustomizeItem>().Initialize(
             item.Name,

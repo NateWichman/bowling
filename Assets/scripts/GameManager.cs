@@ -76,6 +76,7 @@ public class GameManager : MonoBehaviour
 
     public void OnCustomize()
     {
+        CustomizeService.Instance.InitUnlocks();
         CustomizePanel.SetActive(true);
         Panel.SetActive(false);
     }

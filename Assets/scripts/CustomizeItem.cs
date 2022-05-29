@@ -19,6 +19,7 @@ public class CustomizeItem : MonoBehaviour
     private TextMeshProUGUI _subText;
     private Material _material;
 
+    private bool _isLocked;
 
     public void Initialize(
         string name,
@@ -28,6 +29,7 @@ public class CustomizeItem : MonoBehaviour
     )
     {
 
+        _isLocked = locked;
         _nameText.SetText(name);
         _subText.SetText(subtext);
         _lockIcon.SetActive(locked);
@@ -37,6 +39,8 @@ public class CustomizeItem : MonoBehaviour
 
     public void SetMaterial()
     {
+        if (_isLocked) return;
+
         GameManager.Instance.SetMaterial(_material);
         GameManager.Instance.OnEndCustomize();
     }
