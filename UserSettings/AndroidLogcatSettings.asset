@@ -1,9 +1,9 @@
 {
     "m_SelectedDeviceId": "12171JEC203497",
     "m_SelectedPackage": {
-        "deviceId": "",
-        "name": "",
-        "processId": 0,
+        "deviceId": "12171JEC203497",
+        "name": "com.StoneBison.Bowling",
+        "processId": 10491,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -42,6 +42,12 @@
             "deviceId": "12171JEC203497",
             "name": "com.google.android.apps.nexuslauncher",
             "processId": 18460,
+            "exited": false
+        },
+        {
+            "deviceId": "12171JEC203497",
+            "name": "com.StoneBison.Bowling",
+            "processId": 10491,
             "exited": false
         }
     ],

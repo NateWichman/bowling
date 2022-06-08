@@ -42,6 +42,11 @@ public class CustomizePanel : MonoBehaviour
         RefreshUI();
     }
 
+    void Update() {
+        if (Input.GetKey(KeyCode.Escape))
+            GameManager.Instance.OnEndCustomize();
+    }
+
     public void RefreshUI()
     {
         foreach (Transform child in transform)
