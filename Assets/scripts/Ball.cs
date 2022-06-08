@@ -7,6 +7,8 @@ public class Ball : MonoBehaviour
     public UiManager UIManager;
     public bool IsThrown = false;
 
+    public GameObject trail;
+
     private float MinPower = 500f;
     private float MaxPower = 4000f;
 
@@ -31,6 +33,7 @@ public class Ball : MonoBehaviour
 
     void Start()
     {
+        trail.SetActive(false);
         _inputService = InputService.Instance;
         _inputService.InputEvent.AddListener(InputEvent);
         rb = GetComponent<Rigidbody>();
@@ -108,6 +111,8 @@ public class Ball : MonoBehaviour
     public void Shoot()
     {
         GameManager.Instance.OnThrow();
+        trail.SetActive(true);
+        
 
         var direction = new Vector3(transform.position.x, transform.position.y, transform.position.z) - new Vector3(dir.x, transform.position.y, dir.z);
         direction = -direction.normalized;

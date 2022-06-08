@@ -3,7 +3,7 @@
     "m_SelectedPackage": {
         "deviceId": "12171JEC203497",
         "name": "com.StoneBison.Bowling",
-        "processId": 10491,
+        "processId": 11190,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -48,6 +48,12 @@
             "deviceId": "12171JEC203497",
             "name": "com.StoneBison.Bowling",
             "processId": 10491,
+            "exited": false
+        },
+        {
+            "deviceId": "12171JEC203497",
+            "name": "com.StoneBison.Bowling",
+            "processId": 11190,
             "exited": false
         }
     ],
