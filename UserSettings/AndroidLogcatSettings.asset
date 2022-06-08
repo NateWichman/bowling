@@ -1,0 +1,107 @@
+{
+    "m_SelectedDeviceId": "12171JEC203497",
+    "m_SelectedPackage": {
+        "deviceId": "12171JEC203497",
+        "name": "com.StoneBison.Bowling",
+        "processId": 10491,
+        "exited": false
+    },
+    "m_SelectedPriority": 0,
+    "m_KnownPackagesForSerialization": [
+        {
+            "deviceId": "12171JEC203497",
+            "name": "com.DefaultCompany.bowling",
+            "processId": 4864,
+            "exited": true
+        },
+        {
+            "deviceId": "12171JEC203497",
+            "name": "com.DefaultCompany.bowling",
+            "processId": 5594,
+            "exited": true
+        },
+        {
+            "deviceId": "12171JEC203497",
+            "name": "com.StoneBison.Bowling",
+            "processId": 13478,
+            "exited": true
+        },
+        {
+            "deviceId": "12171JEC203497",
+            "name": "com.instagram.android",
+            "processId": 16701,
+            "exited": true
+        },
+        {
+            "deviceId": "12171JEC203497",
+            "name": "com.android.chrome",
+            "processId": 12085,
+            "exited": true
+        },
+        {
+            "deviceId": "12171JEC203497",
+            "name": "com.google.android.apps.nexuslauncher",
+            "processId": 18460,
+            "exited": false
+        },
+        {
+            "deviceId": "12171JEC203497",
+            "name": "com.StoneBison.Bowling",
+            "processId": 10491,
+            "exited": false
+        }
+    ],
+    "m_Tags": {
+        "m_Entries": [
+            {
+                "m_Name": "Filter by all listed tags",
+                "m_Selected": false
+            },
+            {
+                "m_Name": "No Filter",
+                "m_Selected": true
+            },
+            {
+                "m_Name": "",
+                "m_Selected": false
+            },
+            {
+                "m_Name": "Tag Control...",
+                "m_Selected": false
+            },
+            {
+                "m_Name": "",
+                "m_Selected": false
+            },
+            {
+                "m_Name": "Unity",
+                "m_Selected": false
+            },
+            {
+                "m_Name": "CRASH",
+                "m_Selected": false
+            }
+        ]
+    },
+    "m_MemoryViewerState": {
+        "MemoryWindowHeight": 300.0,
+        "MemoryWindowWidth": 170.0,
+        "MemoryTypeEnabled": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+        ],
+        "MemoryGroup": 2,
+        "Behavior": 0
+    },
+    "m_Filter": "",
+    "m_FilterIsRegularExpression": false,
+    "m_SymbolPaths": []
+}
