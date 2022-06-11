@@ -23,6 +23,7 @@ public class Ball : MonoBehaviour
 
     private float _powerUnit;
     private float _spinUnit;
+    private GameObject _addOn = null;
 
     private Rigidbody rb;
 
@@ -70,7 +71,7 @@ public class Ball : MonoBehaviour
         _inputService.InputEvent.RemoveListener(InputEvent);
     }
 
-    void LoadMaterial()
+    public void LoadMaterial()
     {
         string ball = PlayerPrefs.GetString("BALL");
 
@@ -80,6 +81,17 @@ public class Ball : MonoBehaviour
         }
 
         Material material = Resources.Load<Material>("Balls/" + ball);
+
+        if (_addOn != null)
+        {
+            Destroy(_addOn);
+        }
+        GameObject addOn = Resources.Load<GameObject>("AddOns/" + ball);
+        Debug.Log(addOn);
+        if (addOn != null) {
+            _addOn = Instantiate(addOn, transform);
+            _addOn.transform.SetParent(transform);
+        }
         GetComponent<Renderer>().material = material;
     }
 

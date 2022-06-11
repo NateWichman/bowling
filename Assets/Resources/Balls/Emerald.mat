@@ -43,7 +43,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 0}
-        m_Scale: {x: 3, y: 2}
+        m_Scale: {x: 0, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
@@ -91,17 +91,17 @@ Material:
     - _MKEditorShowRimBehavior: 1
     - _MKEditorShowSpecularBehavior: 1
     - _MKEditorShowTranslucentBehavior: 0
-    - _MainTint: 0.919
+    - _MainTint: 1.57
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _ReflectIntensity: 0.205
     - _RenderMode: 0
-    - _RimIntensity: 1
-    - _RimSize: 3.75
+    - _RimIntensity: 0.919
+    - _RimSize: 3.12
     - _ShadowIntensity: 0.1
-    - _Shininess: 0.059
+    - _Shininess: 1
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SpecularIntensity: 2
@@ -116,7 +116,7 @@ Material:
     - _UseTranslucent: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 0, g: 0.7179005, b: 0.8602941, a: 1}
+    - _Color: {r: 0.3137255, g: 0.78431374, b: 0.47058824, a: 1}
     - _DetailColor: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 1, g: 0.93773586, b: 0.93773586, a: 1}
     - _ReflectColor: {r: 1, g: 1, b: 1, a: 0.5}

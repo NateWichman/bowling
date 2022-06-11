@@ -35,7 +35,25 @@ public class CustomizeItem : MonoBehaviour
         _subText.SetText(subtext);
         _lockIcon.SetActive(locked);
         _ball.GetComponent<Renderer>().material = material;
+
+        var addOn = Resources.Load<GameObject>("AddOns/" + name);
+        Debug.Log("IS ADDON?");
+        Debug.Log(addOn);
+        if (addOn != null)
+        {
+           var _addOn =  Instantiate(addOn, _ball.transform);
+            SetLayerRecursively(_addOn, 5);
+        }
         _material = material;
+    }
+
+    private void SetLayerRecursively(GameObject obj, int layer)
+    {
+        obj.layer = layer;
+        foreach (Transform t in obj.transform)
+        {
+            SetLayerRecursively(t.gameObject, layer);
+        }
     }
 
     public void SetMaterial()

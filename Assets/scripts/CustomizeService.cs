@@ -15,7 +15,8 @@ public enum KeyEnum
     Core = 7,
     Diamond = 8,
     PoolBall = 9,
-    Emerald = 10
+    Emerald = 10,
+    Jupiter = 11,
 }
 
 public class CustomizeService : MonoBehaviour
@@ -40,11 +41,13 @@ public class CustomizeService : MonoBehaviour
         int numGamesPlayed = PlayerPrefs.GetInt("NUM_GAMES_PLAYED", 0);
         int isGhost = PlayerPrefs.GetInt("IS_GHOST", 0);
         int isPoolBall = PlayerPrefs.GetInt("IS_POOL_BALL", 0);
+        int strikesInARow = PlayerPrefs.GetInt("STRIKES_ROW", 0);
 
         Unlocks = new Dictionary<KeyEnum, bool>();
         Unlocks.Add(KeyEnum.Bronze, score >= 100);
         Unlocks.Add(KeyEnum.Silver, score >= 150);
         Unlocks.Add(KeyEnum.Gold, score >= 200);
+        Unlocks.Add(KeyEnum.Jupiter, strikesInARow > 2);
         Unlocks.Add(KeyEnum.Moon, numGamesPlayed >= 10);
         Unlocks.Add(KeyEnum.Earth, numGamesPlayed >= 100);
         Unlocks.Add(KeyEnum.Ghost, isGhost == 1);
