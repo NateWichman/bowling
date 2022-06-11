@@ -1010,6 +1010,7 @@ GameObject:
   - component: {fileID: 162544029}
   - component: {fileID: 162544028}
   - component: {fileID: 162544031}
+  - component: {fileID: 162544032}
   m_Layer: 5
   m_Name: BowlingBallIcon
   m_TagString: Untagged
@@ -1025,7 +1026,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 162544026}
   m_LocalRotation: {x: -0.1815988, y: -0.7017573, z: 0.19268355, w: 0.6613862}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -100}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1113,6 +1114,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 100
+--- !u!114 &162544032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 162544026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b2d01d7e6771ab4e98bfa849a93bcd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsUI: 1
 --- !u!1001 &212657061
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1482,6 +1496,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BallIsThrowing: 0
   Resetting:
+    m_PersistentCalls:
+      m_Calls: []
+  SkinChange:
     m_PersistentCalls:
       m_Calls: []
   BowlingBall: {fileID: 560529559}

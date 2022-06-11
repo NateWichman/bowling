@@ -62,37 +62,11 @@ public class Ball : MonoBehaviour
 
 
         UpdateLine();
-
-        LoadMaterial();
     }
 
     void Destroy()
     {
         _inputService.InputEvent.RemoveListener(InputEvent);
-    }
-
-    public void LoadMaterial()
-    {
-        string ball = PlayerPrefs.GetString("BALL");
-
-        if (ball == null || ball == "")
-        {
-            ball = "HouseBall";
-        }
-
-        Material material = Resources.Load<Material>("Balls/" + ball);
-
-        if (_addOn != null)
-        {
-            Destroy(_addOn);
-        }
-        GameObject addOn = Resources.Load<GameObject>("AddOns/" + ball);
-        Debug.Log(addOn);
-        if (addOn != null) {
-            _addOn = Instantiate(addOn, transform);
-            _addOn.transform.SetParent(transform);
-        }
-        GetComponent<Renderer>().material = material;
     }
 
     private void InputEvent(InputEventStruct data)

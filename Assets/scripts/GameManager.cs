@@ -284,7 +284,6 @@ public class GameManager : MonoBehaviour
     public void SetMaterial(Material material)
     {
         PlayerPrefs.SetString("BALL", material.name);
-        GameObject.FindGameObjectWithTag("BALL").GetComponent<Ball>().LoadMaterial();
         OnEndCustomize();
         SkinChange.Invoke();
     }
