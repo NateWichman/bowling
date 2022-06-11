@@ -17,6 +17,7 @@ public enum KeyEnum
     PoolBall = 9,
     Emerald = 10,
     Jupiter = 11,
+    FishBowl = 12
 }
 
 public class CustomizeService : MonoBehaviour
@@ -48,6 +49,7 @@ public class CustomizeService : MonoBehaviour
         Unlocks.Add(KeyEnum.Silver, score >= 150);
         Unlocks.Add(KeyEnum.Gold, score >= 200);
         Unlocks.Add(KeyEnum.Jupiter, strikesInARow > 2);
+        Unlocks.Add(KeyEnum.FishBowl, strikesInARow > 3);
         Unlocks.Add(KeyEnum.Moon, numGamesPlayed >= 10);
         Unlocks.Add(KeyEnum.Earth, numGamesPlayed >= 100);
         Unlocks.Add(KeyEnum.Ghost, isGhost == 1);

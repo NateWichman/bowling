@@ -64,6 +64,7 @@ public class CustomizePanel : MonoBehaviour
         new Item("Pool Ball", "Get exactly 9 points in a game", !_customizeService.Unlocks[KeyEnum.PoolBall], Resources.Load<Material>("Balls/PoolBall")),
         new Item("Ghost", "Get 0 points in a game", !_customizeService.Unlocks[KeyEnum.Ghost], Resources.Load<Material>("Balls/Ghost")),
         new Item("Jupiter", "Get two strikes in a row", !_customizeService.Unlocks[KeyEnum.Jupiter], Resources.Load<Material>("Balls/Jupiter")),
+        new Item("Fishbowl", "Get three strikes in a row", !_customizeService.Unlocks[KeyEnum.FishBowl], Resources.Load<Material>("Balls/Fishbowl")),
         new Item("Moon", "Play 10 Games", !_customizeService.Unlocks[KeyEnum.Moon], Resources.Load<Material>("Balls/Moon")),
         new Item("Core", "Play 30 Games", !_customizeService.Unlocks[KeyEnum.Core], Resources.Load<Material>("Balls/Core")),
         new Item("Earth", "Play 100 Games", !_customizeService.Unlocks[KeyEnum.Earth], Resources.Load<Material>("Balls/Earth")),

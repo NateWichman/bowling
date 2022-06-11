@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     public bool BallIsThrowing = false;
     public UnityEvent Resetting;
+    public UnityEvent SkinChange;
     public GameObject BowlingBall;
     public GameObject Pins;
     public UiManager UIManager;
@@ -29,10 +30,13 @@ public class GameManager : MonoBehaviour
 
     private bool isSecondThrow = false;
 
+    private int _strikesInARow = 0;
+
     void Awake()
     {
         Instance = this;
         _score = new Score();
+        SkinChange = new UnityEvent();
     }
 
     public void PinFall()
@@ -42,7 +46,19 @@ public class GameManager : MonoBehaviour
 
         if (_shotScore == 10)
         {
+            if (!isSecondThrow) {
+                _strikesInARow++;
+
+                var memory = PlayerPrefs.GetInt("STRIKES_ROW", 0);
+                if (_strikesInARow > memory) {
+                    PlayerPrefs.SetInt("STRIKES_ROW", _strikesInARow);
+                }
+            } else {
+                _strikesInARow = 0;
+            }
             UIManager.SetSubText(isSecondThrow ? "Spare" : "STRIKE!");
+        } else {
+            _strikesInARow = 0;
         }
     }
 
@@ -53,6 +69,8 @@ public class GameManager : MonoBehaviour
         NextBall = GameObject.Instantiate(BowlingBall);
         NextBall.SetActive(false);
         Resetting = new UnityEvent();
+
+        SkinChange.AddListener(Test);
         EndGamePanel.SetActive(false);
         Panel.SetActive(true);
         CustomizePanel.SetActive(false);
@@ -268,5 +286,11 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetString("BALL", material.name);
         GameObject.FindGameObjectWithTag("BALL").GetComponent<Ball>().LoadMaterial();
         OnEndCustomize();
+        SkinChange.Invoke();
+    }
+
+    private void Test()
+    {
+        Debug.Log("TESTING");
     }
 }

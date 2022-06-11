@@ -37,8 +37,6 @@ public class CustomizeItem : MonoBehaviour
         _ball.GetComponent<Renderer>().material = material;
 
         var addOn = Resources.Load<GameObject>("AddOns/" + name);
-        Debug.Log("IS ADDON?");
-        Debug.Log(addOn);
         if (addOn != null)
         {
            var _addOn =  Instantiate(addOn, _ball.transform);

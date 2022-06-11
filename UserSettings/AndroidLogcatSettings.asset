@@ -1,37 +1,13 @@
 {
     "m_SelectedDeviceId": "12171JEC203497",
     "m_SelectedPackage": {
-        "deviceId": "12171JEC203497",
-        "name": "com.StoneBison.Bowling",
-        "processId": 11190,
+        "deviceId": "",
+        "name": "",
+        "processId": 0,
         "exited": false
     },
     "m_SelectedPriority": 0,
     "m_KnownPackagesForSerialization": [
-        {
-            "deviceId": "12171JEC203497",
-            "name": "com.DefaultCompany.bowling",
-            "processId": 4864,
-            "exited": true
-        },
-        {
-            "deviceId": "12171JEC203497",
-            "name": "com.DefaultCompany.bowling",
-            "processId": 5594,
-            "exited": true
-        },
-        {
-            "deviceId": "12171JEC203497",
-            "name": "com.StoneBison.Bowling",
-            "processId": 13478,
-            "exited": true
-        },
-        {
-            "deviceId": "12171JEC203497",
-            "name": "com.instagram.android",
-            "processId": 16701,
-            "exited": true
-        },
         {
             "deviceId": "12171JEC203497",
             "name": "com.android.chrome",
@@ -42,19 +18,25 @@
             "deviceId": "12171JEC203497",
             "name": "com.google.android.apps.nexuslauncher",
             "processId": 18460,
-            "exited": false
+            "exited": true
         },
         {
             "deviceId": "12171JEC203497",
             "name": "com.StoneBison.Bowling",
             "processId": 10491,
-            "exited": false
+            "exited": true
         },
         {
             "deviceId": "12171JEC203497",
             "name": "com.StoneBison.Bowling",
             "processId": 11190,
-            "exited": false
+            "exited": true
+        },
+        {
+            "deviceId": "12171JEC203497",
+            "name": "com.StoneBison.Bowling",
+            "processId": 22381,
+            "exited": true
         }
     ],
     "m_Tags": {
