@@ -8,6 +8,7 @@ public class Ball : MonoBehaviour
     public bool IsThrown = false;
 
     public GameObject trail;
+    public GameObject spinTrail;
 
     private float MinPower = 500f;
     private float MaxPower = 4000f;
@@ -33,6 +34,7 @@ public class Ball : MonoBehaviour
 
     void Start()
     {
+        spinTrail.SetActive(false);
         trail.SetActive(false);
         _inputService = InputService.Instance;
         _inputService.InputEvent.AddListener(InputEvent);
@@ -112,8 +114,8 @@ public class Ball : MonoBehaviour
     {
         GameManager.Instance.OnThrow();
         trail.SetActive(true);
+        spinTrail.SetActive(true);
         
-
         var direction = new Vector3(transform.position.x, transform.position.y, transform.position.z) - new Vector3(dir.x, transform.position.y, dir.z);
         direction = -direction.normalized;
         var force = (direction) * Power * rb.mass;

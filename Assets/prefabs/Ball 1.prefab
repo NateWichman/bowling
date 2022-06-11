@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8090137216937104279}
   - component: {fileID: 1995196744809232472}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: SpinTrail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -279,6 +279,7 @@ MonoBehaviour:
   UIManager: {fileID: 0}
   IsThrown: 0
   trail: {fileID: 5233738965705787544}
+  spinTrail: {fileID: 3965308347931210278}
 --- !u!135 &4522469334016475626
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -781,7 +782,7 @@ TrailRenderer:
   m_Time: 1
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 1
+    widthMultiplier: 1.5
     widthCurve:
       serializedVersion: 2
       m_Curve:
