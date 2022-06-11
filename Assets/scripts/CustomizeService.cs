@@ -14,7 +14,8 @@ public enum KeyEnum
     Ghost = 6,
     Core = 7,
     Diamond = 8,
-    PoolBall = 9
+    PoolBall = 9,
+    Emerald = 10
 }
 
 public class CustomizeService : MonoBehaviour
@@ -50,5 +51,6 @@ public class CustomizeService : MonoBehaviour
         Unlocks.Add(KeyEnum.Core, numGamesPlayed >= 30);
         Unlocks.Add(KeyEnum.Diamond, score >= 300);
         Unlocks.Add(KeyEnum.PoolBall, isPoolBall == 1);
+        Unlocks.Add(KeyEnum.Emerald, score >= 250);
     }
 }

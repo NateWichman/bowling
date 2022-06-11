@@ -59,6 +59,7 @@ public class CustomizePanel : MonoBehaviour
         new Item("Bronze", "Score at least 100 points", !_customizeService.Unlocks[KeyEnum.Bronze], Resources.Load<Material>("Balls/Bronze")),
         new Item("Silver", "Score at least 150 points", !_customizeService.Unlocks[KeyEnum.Silver], Resources.Load<Material>("Balls/Silver")),
         new Item("Gold", "Score at least 200 points", !_customizeService.Unlocks[KeyEnum.Gold], Resources.Load<Material>("Balls/Gold")),
+        new Item("Emerald", "Score at least 250 points", !_customizeService.Unlocks[KeyEnum.Emerald], Resources.Load<Material>("Balls/Emerald")),
         new Item("Diamond", "Score a perfect 300", !_customizeService.Unlocks[KeyEnum.Diamond], Resources.Load<Material>("Balls/Diamond")),
         new Item("Pool Ball", "Get exactly 9 points in a game", !_customizeService.Unlocks[KeyEnum.PoolBall], Resources.Load<Material>("Balls/PoolBall")),
         new Item("Ghost", "Get 0 points in a game", !_customizeService.Unlocks[KeyEnum.Ghost], Resources.Load<Material>("Balls/Ghost")),
