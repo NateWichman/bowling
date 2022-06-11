@@ -29,7 +29,8 @@ public class CustomizeItem : MonoBehaviour
     )
     {
 
-        _isLocked = locked;
+        // _isLocked = locked;
+        _isLocked = false;
         _nameText.SetText(name);
         _subText.SetText(subtext);
         _lockIcon.SetActive(locked);
