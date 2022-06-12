@@ -20,12 +20,22 @@ public class Pin : MonoBehaviour
     {
         if (collision.gameObject.tag == "BALL" || collision.gameObject.tag == "PIN")
         {
-            StartCoroutine(ShootTrail());
+      
+            var scale = collision.relativeVelocity.magnitude / 25f;
+            var direction = Vector3.Reflect(GetComponent<Rigidbody>().velocity, collision.contacts[0].normal);
+            
+            if (scale < 0.3f)
+            {
+                scale = 0.3f;
+            }
+            StartCoroutine(ShootTrail(scale, direction.normalized));
             _audioSource.Play();
         }
     }
 
-    IEnumerator ShootTrail() {
+    IEnumerator ShootTrail(float scale, Vector3 direction) {
+        Trail.transform.localScale = new Vector3(scale, scale, scale);
+        Trail.transform.rotation = Quaternion.LookRotation(-direction);
         Trail.SetActive(true);
         yield return new WaitForSeconds(0.8f);
         Trail.SetActive(false);
