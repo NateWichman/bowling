@@ -11,6 +11,11 @@ public class CameraFollow : MonoBehaviour
 
     private bool _isFollowing = false;
 
+    private bool _isReturning = false;
+    float t;
+    Vector3 endPos;
+    float time = 1f;
+
     private float _offset;
 
     private float _minXpos = -40f;
@@ -30,14 +35,23 @@ public class CameraFollow : MonoBehaviour
             if (newXpos < _minXpos)
                 newXpos = _minXpos;
 
-
             var newYPos = transform.position.y - 20 * Time.deltaTime;
             newYPos = newYPos < 5 ? 5 : newYPos;
-
-
-
             transform.position = new Vector3(newXpos, newYPos, transform.position.z);
+        }
 
+
+        if (_isReturning)
+        {
+            if (t >= 1f)
+            {
+                _isReturning = false;
+            }
+            else
+            {
+                t += Time.deltaTime / time;
+                transform.position = Vector3.Lerp(endPos, _startPos, t);
+            }
         }
     }
 
@@ -52,8 +66,11 @@ public class CameraFollow : MonoBehaviour
 
     private void Reset()
     {
+        t = 0;
+        endPos = transform.position;
+        _isReturning = true;
         _isFollowing = false;
-        transform.position = _startPos;
+       // transform.position = _startPos;
         _animator.SetTrigger("RESET");
     }
 }
