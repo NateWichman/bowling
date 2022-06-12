@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 using System.Linq;
+using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class GameManager : MonoBehaviour
     public CameraFollow cameraFollow;
     public ParticleSystem StrikePartice;
     public GameObject explosionPoint;
+    public ParticleSystem SpareParticle;
 
     public GameObject Panel;
     public GameObject CustomizePanel;
@@ -46,8 +48,6 @@ public class GameManager : MonoBehaviour
         _roundScore++;
         _shotScore++;
 
-
-        
         if (_shotScore == 10)
         {
             if (!isSecondThrow) {
@@ -58,12 +58,20 @@ public class GameManager : MonoBehaviour
                     PlayerPrefs.SetInt("STRIKES_ROW", _strikesInARow);
                 }
             } else {
+                StartCoroutine(SpareAnimation());
                 _strikesInARow = 0;
             }
             UIManager.SetSubText(isSecondThrow ? "Spare" : "STRIKE!");
         } else {
             _strikesInARow = 0;
         }
+    }
+
+    IEnumerator SpareAnimation()
+    {
+        SpareParticle.Play(true);
+        yield return new WaitForSeconds(2);
+        SpareParticle.Stop();
     }
 
     private void StrikeAnimation()
