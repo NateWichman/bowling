@@ -51,25 +51,18 @@ public class GameManager : MonoBehaviour
         if (_shotScore == 10)
         {
             if (!isSecondThrow) {
-                _strikesInARow++;
                 StrikeAnimation();
-                var memory = PlayerPrefs.GetInt("STRIKES_ROW", 0);
-                if (_strikesInARow > memory) {
-                    PlayerPrefs.SetInt("STRIKES_ROW", _strikesInARow);
-                }
             } else {
                 StartCoroutine(SpareAnimation());
-                _strikesInARow = 0;
             }
             UIManager.SetSubText(isSecondThrow ? "Spare" : "STRIKE!");
-        } else {
-            _strikesInARow = 0;
         }
     }
 
     IEnumerator SpareAnimation()
     {
         SpareParticle.Play(true);
+        Sounds.Instance.PlaySpareSound();
         yield return new WaitForSeconds(2);
         SpareParticle.Stop();
     }
@@ -77,6 +70,7 @@ public class GameManager : MonoBehaviour
     private void StrikeAnimation()
     {
         StrikePartice.Play(true);
+        Sounds.Instance.PlayStrikeSound();
         var pins = GameObject.FindGameObjectsWithTag("PIN");
         foreach (var pin in pins)
         {
@@ -133,8 +127,17 @@ public class GameManager : MonoBehaviour
         if (_roundScore == 10)
         {
             // strike, finish round
+            _strikesInARow++;
+            var memory = PlayerPrefs.GetInt("STRIKES_ROW", 0);
+            if (_strikesInARow > memory)
+            {
+                PlayerPrefs.SetInt("STRIKES_ROW", _strikesInARow);
+            }
             Reset();
             return;
+        } else
+        {
+            _strikesInARow = 0;
         }
 
         isSecondThrow = true;

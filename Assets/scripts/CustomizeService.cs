@@ -44,6 +44,8 @@ public class CustomizeService : MonoBehaviour
         int isPoolBall = PlayerPrefs.GetInt("IS_POOL_BALL", 0);
         int strikesInARow = PlayerPrefs.GetInt("STRIKES_ROW", 0);
 
+        Debug.Log(strikesInARow);
+
         Unlocks = new Dictionary<KeyEnum, bool>();
         Unlocks.Add(KeyEnum.Bronze, score >= 100);
         Unlocks.Add(KeyEnum.Silver, score >= 150);
