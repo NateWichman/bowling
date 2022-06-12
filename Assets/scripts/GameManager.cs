@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
     private GameObject NextPins;
     private GameObject NextBall;
     public CameraFollow cameraFollow;
+    public ParticleSystem StrikePartice;
+    public GameObject explosionPoint;
 
     public GameObject Panel;
     public GameObject CustomizePanel;
@@ -44,11 +46,13 @@ public class GameManager : MonoBehaviour
         _roundScore++;
         _shotScore++;
 
+
+        
         if (_shotScore == 10)
         {
             if (!isSecondThrow) {
                 _strikesInARow++;
-
+                StrikeAnimation();
                 var memory = PlayerPrefs.GetInt("STRIKES_ROW", 0);
                 if (_strikesInARow > memory) {
                     PlayerPrefs.SetInt("STRIKES_ROW", _strikesInARow);
@@ -59,6 +63,17 @@ public class GameManager : MonoBehaviour
             UIManager.SetSubText(isSecondThrow ? "Spare" : "STRIKE!");
         } else {
             _strikesInARow = 0;
+        }
+    }
+
+    private void StrikeAnimation()
+    {
+        StrikePartice.Play(true);
+        var pins = GameObject.FindGameObjectsWithTag("PIN");
+        foreach (var pin in pins)
+        {
+            Debug.Log(pin);
+            pin.GetComponent<Rigidbody>().AddExplosionForce(300000f, explosionPoint.transform.position, 10f);
         }
     }
 
