@@ -75,7 +75,7 @@ public class GameManager : MonoBehaviour
         foreach (var pin in pins)
         {
             Debug.Log(pin);
-            pin.GetComponent<Rigidbody>().AddExplosionForce(300000f, explosionPoint.transform.position, 10f);
+            pin.GetComponent<Rigidbody>().AddExplosionForce(900000f, explosionPoint.transform.position, 10f);
         }
     }
 
