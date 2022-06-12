@@ -99,8 +99,8 @@ public class Ball : MonoBehaviour
     public void Shoot()
     {
         GameManager.Instance.OnThrow();
-        trail.SetActive(true);
-        spinTrail.SetActive(true);
+        // trail.SetActive(true);
+        // spinTrail.SetActive(true);
         
         var direction = new Vector3(transform.position.x, transform.position.y, transform.position.z) - new Vector3(dir.x, transform.position.y, dir.z);
         direction = -direction.normalized;

@@ -42,6 +42,11 @@ public class CustomizePanel : MonoBehaviour
         RefreshUI();
     }
 
+    private void OnEnable()
+    {
+        RefreshUI();
+    }
+
     void Update() {
         if (Input.GetKey(KeyCode.Escape))
             GameManager.Instance.OnEndCustomize();

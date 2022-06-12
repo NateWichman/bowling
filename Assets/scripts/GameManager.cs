@@ -145,7 +145,7 @@ public class GameManager : MonoBehaviour
     {
         EndGamePanel.SetActive(true);
         Panel.SetActive(false);
-        int highscore = PlayerPrefs.GetInt("HIGH_SCORE");
+        int highscore = PlayerPrefs.GetInt("HIGH_SCORE", 0);
         int numGamesPlayed = PlayerPrefs.GetInt("NUM_GAMES_PLAYED", 0);
         PlayerPrefs.SetInt("NUM_GAMES_PLAYED", numGamesPlayed + 1);
 
