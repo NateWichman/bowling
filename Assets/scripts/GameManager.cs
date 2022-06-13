@@ -284,6 +284,11 @@ public class GameManager : MonoBehaviour
         foreach (Pin p in Pins.GetComponentsInChildren<Pin>())
         {
             Destroy(p);
+
+            if (p.transform.position.y > -10f)
+            {
+                Destroy(p.gameObject);
+            }
         } 
 
         Machine.Instance.SweepPins();
