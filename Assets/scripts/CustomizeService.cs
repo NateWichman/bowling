@@ -44,14 +44,13 @@ public class CustomizeService : MonoBehaviour
         int isPoolBall = PlayerPrefs.GetInt("IS_POOL_BALL", 0);
         int strikesInARow = PlayerPrefs.GetInt("STRIKES_ROW", 0);
 
-        Debug.Log(strikesInARow);
 
         Unlocks = new Dictionary<KeyEnum, bool>();
         Unlocks.Add(KeyEnum.Bronze, score >= 100);
         Unlocks.Add(KeyEnum.Silver, score >= 150);
         Unlocks.Add(KeyEnum.Gold, score >= 200);
-        Unlocks.Add(KeyEnum.Jupiter, strikesInARow > 2);
-        Unlocks.Add(KeyEnum.FishBowl, strikesInARow > 3);
+        Unlocks.Add(KeyEnum.Jupiter, strikesInARow >= 2);
+        Unlocks.Add(KeyEnum.FishBowl, strikesInARow >= 3);
         Unlocks.Add(KeyEnum.Moon, numGamesPlayed >= 10);
         Unlocks.Add(KeyEnum.Earth, numGamesPlayed >= 100);
         Unlocks.Add(KeyEnum.Ghost, isGhost == 1);

@@ -124,7 +124,6 @@ public class GameManager : MonoBehaviour
     }
     private void FirstThrowDone()
     {
-
         if (_roundScore == 10)
         {
             // strike, finish round
@@ -284,15 +283,10 @@ public class GameManager : MonoBehaviour
         foreach (Pin p in Pins.GetComponentsInChildren<Pin>())
         {
             Destroy(p);
-
-            if (p.transform.position.y > -10f)
-            {
-                Destroy(p.gameObject);
-            }
         } 
 
         Machine.Instance.SweepPins();
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1.5f);
         GameObject.Destroy(Pins, 10f);
         NextPins.SetActive(true);
         Pins = NextPins;
