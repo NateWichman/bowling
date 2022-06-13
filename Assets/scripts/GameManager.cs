@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour
         Instance = this;
         _score = new Score();
         SkinChange = new UnityEvent();
+        //Machine.SetActive(false);
     }
 
     public void PinFall()
@@ -143,14 +144,13 @@ public class GameManager : MonoBehaviour
         isSecondThrow = true;
 
         ResetBall();
+        StartCoroutine(ShowControls(1f));
 
-        GameObject[] pins = GameObject.FindGameObjectsWithTag("PIN");
-
-        foreach (var pin in pins)
+        foreach (var pin in Pins.GetComponentsInChildren<Pin>())
         {
-            if (pin.GetComponent<Pin>().hasFallen)
+            if (pin.hasFallen)
             {
-                pin.GetComponent<Pin>().Destroy();
+                pin.Destroy();
             }
         }
     }
@@ -161,7 +161,8 @@ public class GameManager : MonoBehaviour
 
         if (!_score.IsGameOver())
         {
-            ResetPins();
+            StartCoroutine(ResetPins());
+            StartCoroutine(ShowControls(2f));
         }
         _shotScore = 0;
         isSecondThrow = false;
@@ -201,7 +202,8 @@ public class GameManager : MonoBehaviour
     public void NewGame()
     {
         _score = new Score();
-        ResetPins();
+
+        StartCoroutine(ResetPins());
         _shotScore = 0;
         isSecondThrow = false;
         UIManager.HideHighscoreText();
@@ -231,7 +233,18 @@ public class GameManager : MonoBehaviour
         UIManager.DisplayFrames(_score.GetFrames());
 
 
-        GameObject.Destroy(BowlingBall);
+
+        if (BowlingBall.transform.position.y > -10f)
+        {
+            GameObject.Destroy(BowlingBall);
+        }
+        else
+        {
+            BowlingBall.tag = "Untagged";
+            Destroy(BowlingBall.GetComponent<Ball>());
+            Destroy(BowlingBall, 10f);
+        }
+
         NextBall.SetActive(true);
         BowlingBall = NextBall;
         NextBall = GameObject.Instantiate(BowlingBall);
@@ -239,11 +252,7 @@ public class GameManager : MonoBehaviour
         Resetting.Invoke();
         BallIsThrowing = false;
 
-        if (!_score.IsGameOver())
-        {
-            Panel.SetActive(true);
-        }
-        else
+        if (_score.IsGameOver())
         {
             // is game over
             EndGame();
@@ -264,9 +273,22 @@ public class GameManager : MonoBehaviour
 
     }
 
-    private void ResetPins()
+    IEnumerator ShowControls(float seconds)
     {
-        GameObject.Destroy(Pins);
+        yield return new WaitForSeconds(seconds);
+        Panel.SetActive(true);
+    }
+
+    IEnumerator ResetPins()
+    {
+        foreach (Pin p in Pins.GetComponentsInChildren<Pin>())
+        {
+            Destroy(p);
+        } 
+
+        Machine.Instance.SweepPins();
+        yield return new WaitForSeconds(2);
+        GameObject.Destroy(Pins, 10f);
         NextPins.SetActive(true);
         Pins = NextPins;
         NextPins = GameObject.Instantiate(Pins);
