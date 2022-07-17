@@ -35,8 +35,6 @@ public class Skin : MonoBehaviour
             Destroy(_addOn);
         }
         GameObject addOn = Resources.Load<GameObject>("AddOns/" + ball);
-
-        Debug.Log("BALL " + ball + "..... ADD ON: " + addOn.name);
         if (addOn != null)
         {
             _addOn = Instantiate(addOn, transform);

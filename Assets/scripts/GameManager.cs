@@ -83,10 +83,10 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        PlayerPrefs.DeleteAll();
         NextPins = GameObject.Instantiate(Pins);
         NextPins.SetActive(false);
         Resetting = new UnityEvent();
-
         _ballPos = BowlingBall.transform.position;
         SkinChange.AddListener(Test);
         EndGamePanel.SetActive(false);
@@ -269,6 +269,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        CustomizeService.Instance.InitUnlocks();
     }
 
     IEnumerator ShowControls(float seconds)
