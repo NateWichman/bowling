@@ -8,18 +8,21 @@ public class Skin : MonoBehaviour
 
     private GameObject _addOn;
     public bool IsUI = false;
-    // Start is called before the first frame update
+
     void Start()
     {
         GameManager.Instance.SkinChange.AddListener(Respond);
         Respond();
     }
-    void Destroy() 
+    private void OnDestroy()
     {
-        GameManager.Instance.SkinChange.RemoveListener(Respond); 
+        Destroy(_addOn);
+        GameManager.Instance.SkinChange.RemoveListener(Respond);
     }
 
-    public void Respond() {
+    public void Respond()
+    {
+        
         string ball = PlayerPrefs.GetString("BALL");
 
         if (ball == null || ball == "")
@@ -27,12 +30,15 @@ public class Skin : MonoBehaviour
             ball = "HouseBall";
         }
         Material material = Resources.Load<Material>("Balls/" + ball);
-          if (_addOn != null)
+        if (_addOn != null)
         {
             Destroy(_addOn);
         }
         GameObject addOn = Resources.Load<GameObject>("AddOns/" + ball);
-              if (addOn != null) {
+
+        Debug.Log("BALL " + ball + "..... ADD ON: " + addOn.name);
+        if (addOn != null)
+        {
             _addOn = Instantiate(addOn, transform);
             _addOn.transform.SetParent(transform);
 

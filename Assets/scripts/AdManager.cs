@@ -14,7 +14,6 @@ public class AdManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
         if (Application.platform == RuntimePlatform.Android)
             adUnitId = "ca-app-pub-1233908035609897/5126970497";
         else if(Application.platform == RuntimePlatform.IPhonePlayer)

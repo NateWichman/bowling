@@ -14,7 +14,6 @@ public class GameManager : MonoBehaviour
     public GameObject Pins;
     public UiManager UIManager;
     private GameObject NextPins;
-    private GameObject NextBall;
     public CameraFollow cameraFollow;
     public ParticleSystem StrikePartice;
     public GameObject explosionPoint;
@@ -35,7 +34,7 @@ public class GameManager : MonoBehaviour
     private bool isSecondThrow = false;
 
     private int _strikesInARow = 0;
-
+    private Vector3 _ballPos;
     void Awake()
     {
         Instance = this;
@@ -51,9 +50,12 @@ public class GameManager : MonoBehaviour
 
         if (_shotScore == 10)
         {
-            if (!isSecondThrow) {
+            if (!isSecondThrow)
+            {
                 StrikeAnimation();
-            } else {
+            }
+            else
+            {
                 StartCoroutine(SpareAnimation());
             }
             UIManager.SetSubText(isSecondThrow ? "Spare" : "STRIKE!");
@@ -75,7 +77,6 @@ public class GameManager : MonoBehaviour
         var pins = GameObject.FindGameObjectsWithTag("PIN");
         foreach (var pin in pins)
         {
-            Debug.Log(pin);
             pin.GetComponent<Rigidbody>().AddExplosionForce(900000f, explosionPoint.transform.position, 10f);
         }
     }
@@ -84,10 +85,9 @@ public class GameManager : MonoBehaviour
     {
         NextPins = GameObject.Instantiate(Pins);
         NextPins.SetActive(false);
-        NextBall = GameObject.Instantiate(BowlingBall);
-        NextBall.SetActive(false);
         Resetting = new UnityEvent();
 
+        _ballPos = BowlingBall.transform.position;
         SkinChange.AddListener(Test);
         EndGamePanel.SetActive(false);
         Panel.SetActive(true);
@@ -135,7 +135,8 @@ public class GameManager : MonoBehaviour
             }
             Reset();
             return;
-        } else
+        }
+        else
         {
             _strikesInARow = 0;
         }
@@ -241,13 +242,11 @@ public class GameManager : MonoBehaviour
         {
             BowlingBall.tag = "Untagged";
             Destroy(BowlingBall.GetComponent<Ball>());
+            Destroy(BowlingBall.GetComponent<Skin>());
             Destroy(BowlingBall, 10f);
         }
 
-        NextBall.SetActive(true);
-        BowlingBall = NextBall;
-        NextBall = GameObject.Instantiate(BowlingBall);
-        NextBall.SetActive(false);
+        BowlingBall = GameObject.Instantiate(Resources.Load<GameObject>("BALL 1"), _ballPos, Quaternion.identity);
         Resetting.Invoke();
         BallIsThrowing = false;
 
@@ -283,7 +282,7 @@ public class GameManager : MonoBehaviour
         foreach (Pin p in Pins.GetComponentsInChildren<Pin>())
         {
             Destroy(p);
-        } 
+        }
 
         Machine.Instance.SweepPins();
         yield return new WaitForSeconds(1.5f);
@@ -328,7 +327,7 @@ public class GameManager : MonoBehaviour
 
         if (Application.platform == RuntimePlatform.Android)
             Application.OpenURL("https://play.google.com/store/apps/details?id=com.StoneBison.Bowling");
-        else if(Application.platform == RuntimePlatform.IPhonePlayer)
+        else if (Application.platform == RuntimePlatform.IPhonePlayer)
             Application.OpenURL("https://apps.apple.com/us/app/cosmic-bowling-by-stone-bison/id1630610818");
     }
 

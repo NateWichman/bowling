@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 19934348}
   - component: {fileID: 114087837941264784}
   m_Layer: 0
-  m_Name: Liberate_02.1
+  m_Name: Emerald
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

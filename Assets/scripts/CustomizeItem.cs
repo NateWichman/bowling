@@ -29,7 +29,7 @@ public class CustomizeItem : MonoBehaviour
     )
     {
 
-        _isLocked = locked;
+        _isLocked = false;
         _nameText.SetText(name);
         _subText.SetText(subtext);
         _lockIcon.SetActive(locked);
@@ -38,7 +38,7 @@ public class CustomizeItem : MonoBehaviour
         var addOn = Resources.Load<GameObject>("AddOns/" + name);
         if (addOn != null)
         {
-           var _addOn =  Instantiate(addOn, _ball.transform);
+            var _addOn = Instantiate(addOn, _ball.transform);
             SetLayerRecursively(_addOn, 5);
         }
         _material = material;

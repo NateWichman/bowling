@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using System.Linq;
 public class UiManager : MonoBehaviour
 {
+    public static UiManager Instance;
     public TextMeshProUGUI ScoreText;
     public TextMeshProUGUI SubText;
     public TextMeshProUGUI EndGameTotal;
@@ -25,6 +26,10 @@ public class UiManager : MonoBehaviour
     public Slider slider;
     public Slider secondarySlider;
 
+    void Awake()
+    {
+        Instance = this;
+    }
     void Start()
     {
         slider.minValue = 0;
