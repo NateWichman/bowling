@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public bool BallIsThrowing = false;
     public UnityEvent Resetting;
     public UnityEvent SkinChange;
+    public UnityEvent Shooting;
     public GameObject BowlingBall;
     public GameObject Pins;
     public UiManager UIManager;
@@ -40,6 +41,7 @@ public class GameManager : MonoBehaviour
         Instance = this;
         _score = new Score();
         SkinChange = new UnityEvent();
+        Shooting = new UnityEvent();
         //Machine.SetActive(false);
     }
 
@@ -81,14 +83,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
+
     void Start()
     {
-        PlayerPrefs.DeleteAll();
+        // PlayerPrefs.DeleteAll();
         NextPins = GameObject.Instantiate(Pins);
         NextPins.SetActive(false);
         Resetting = new UnityEvent();
         _ballPos = BowlingBall.transform.position;
-        SkinChange.AddListener(Test);
         EndGamePanel.SetActive(false);
         Panel.SetActive(true);
         CustomizePanel.SetActive(false);
@@ -299,6 +302,7 @@ public class GameManager : MonoBehaviour
 
     public void OnThrow()
     {
+        Shooting.Invoke();
         Panel.SetActive(false);
         BallIsThrowing = true;
         cameraFollow.FollowBall();
@@ -339,8 +343,4 @@ public class GameManager : MonoBehaviour
         SkinChange.Invoke();
     }
 
-    private void Test()
-    {
-        Debug.Log("TESTING");
-    }
 }

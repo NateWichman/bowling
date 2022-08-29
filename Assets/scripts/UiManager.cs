@@ -26,9 +26,12 @@ public class UiManager : MonoBehaviour
     public Slider slider;
     public Slider secondarySlider;
 
+    public GameObject Notification;
+
     void Awake()
     {
         Instance = this;
+        Notification.SetActive(false);
     }
     void Start()
     {
@@ -231,5 +234,18 @@ public class UiManager : MonoBehaviour
         SpinDirectionBtn.GetComponentInChildren<TextMeshProUGUI>().SetText(
             InputService.Instance.SpinDirection == Direction.RIGHT ? "Right" : "Left"
         );
+    }
+
+    public void ShowUnlocked(string BallName)
+    {
+        StartCoroutine(ShowNotification(BallName));
+    }
+
+    private IEnumerator ShowNotification(string msg)
+    {
+        Notification.GetComponent<Notification>().SetMessage(msg);
+        Notification.SetActive(true);
+        yield return new WaitForSeconds(3);
+        Notification.SetActive(false);
     }
 }

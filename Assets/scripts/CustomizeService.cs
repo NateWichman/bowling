@@ -18,7 +18,8 @@ public enum KeyEnum
     PoolBall = 9,
     Emerald = 10,
     Jupiter = 11,
-    FishBowl = 12
+    FishBowl = 12,
+    Clark = 13
 }
 
 public class CustomizeService : MonoBehaviour
@@ -67,6 +68,7 @@ public class CustomizeService : MonoBehaviour
         newUnlocks.Add(KeyEnum.Diamond, score >= 300);
         newUnlocks.Add(KeyEnum.PoolBall, isPoolBall == 1);
         newUnlocks.Add(KeyEnum.Emerald, score >= 250);
+        newUnlocks.Add(KeyEnum.Clark, true);
 
 
         CheckIfAnyNewUnlocks(newUnlocks);
@@ -80,7 +82,7 @@ public class CustomizeService : MonoBehaviour
 
         foreach (var val in dict3)
         {
-            Debug.Log("UNLOCKED: " + Enum.GetName(typeof(KeyEnum), val.Key));
+            UiManager.Instance.ShowUnlocked(Enum.GetName(typeof(KeyEnum), val.Key) + " UNLOCKED");
         }
     }
 }
