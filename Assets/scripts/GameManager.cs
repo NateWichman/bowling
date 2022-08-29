@@ -302,6 +302,7 @@ public class GameManager : MonoBehaviour
 
     public void OnThrow()
     {
+        AdManager.Instance.ShowRewardedAd();
         Shooting.Invoke();
         Panel.SetActive(false);
         BallIsThrowing = true;
