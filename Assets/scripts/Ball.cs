@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class Ball : MonoBehaviour
 {
-    public UiManager UIManager;
     public bool IsThrown = false;
+
+    public GameObject trail;
+    public GameObject spinTrail;
 
     private float MinPower = 500f;
     private float MaxPower = 4000f;
@@ -21,6 +23,7 @@ public class Ball : MonoBehaviour
     private float _powerUnit;
     private float _spinUnit;
 
+
     private Rigidbody rb;
 
     private LineRenderer lineRenderer;
@@ -29,8 +32,13 @@ public class Ball : MonoBehaviour
     private Vector3 dir = new Vector3(1f, 0, 0);
     private InputService _inputService;
 
+    private UiManager UIManager;
+
     void Start()
     {
+        UIManager = UiManager.Instance;
+        spinTrail.SetActive(false);
+        trail.SetActive(false);
         _inputService = InputService.Instance;
         _inputService.InputEvent.AddListener(InputEvent);
         rb = GetComponent<Rigidbody>();
@@ -56,26 +64,11 @@ public class Ball : MonoBehaviour
 
 
         UpdateLine();
-
-        LoadMaterial();
     }
 
     void Destroy()
     {
         _inputService.InputEvent.RemoveListener(InputEvent);
-    }
-
-    void LoadMaterial()
-    {
-        string ball = PlayerPrefs.GetString("BALL");
-
-        if (ball == null || ball == "")
-        {
-            ball = "HouseBall";
-        }
-
-        Material material = Resources.Load<Material>("Balls/" + ball);
-        GetComponent<Renderer>().material = material;
     }
 
     private void InputEvent(InputEventStruct data)
@@ -108,6 +101,8 @@ public class Ball : MonoBehaviour
     public void Shoot()
     {
         GameManager.Instance.OnThrow();
+        // trail.SetActive(true);
+        // spinTrail.SetActive(true);
 
         var direction = new Vector3(transform.position.x, transform.position.y, transform.position.z) - new Vector3(dir.x, transform.position.y, dir.z);
         direction = -direction.normalized;
@@ -182,12 +177,14 @@ public class Ball : MonoBehaviour
         {
             gameObject.transform.Translate(new Vector3(0f, 0, -1f) * 12.5f * Time.deltaTime);
             UpdateLine();
+            CheckBallBounds();
         }
 
         if (_inputService.IsRightDown)
         {
             gameObject.transform.Translate(new Vector3(0f, 0, 1f) * 12.5f * Time.deltaTime);
             UpdateLine();
+            CheckBallBounds();
         }
 
         if (_inputService.IsUpperLeftDown)
@@ -202,6 +199,19 @@ public class Ball : MonoBehaviour
             UpdateLine();
         }
 
+    }
+
+    private void CheckBallBounds()
+    {
+
+        if (transform.position.z > 8)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y, 8f);
+        }
+        if (transform.position.z < -8)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y, -8f);
+        }
     }
 
     IEnumerator Timeout()

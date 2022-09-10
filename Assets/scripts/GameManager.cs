@@ -2,18 +2,23 @@
 using UnityEngine;
 using UnityEngine.Events;
 using System.Linq;
+using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     public bool BallIsThrowing = false;
     public UnityEvent Resetting;
+    public UnityEvent SkinChange;
+    public UnityEvent Shooting;
     public GameObject BowlingBall;
     public GameObject Pins;
     public UiManager UIManager;
     private GameObject NextPins;
-    private GameObject NextBall;
     public CameraFollow cameraFollow;
+    public ParticleSystem StrikePartice;
+    public GameObject explosionPoint;
+    public ParticleSystem SpareParticle;
 
     public GameObject Panel;
     public GameObject CustomizePanel;
@@ -29,10 +34,15 @@ public class GameManager : MonoBehaviour
 
     private bool isSecondThrow = false;
 
+    private int _strikesInARow = 0;
+    private Vector3 _ballPos;
     void Awake()
     {
         Instance = this;
         _score = new Score();
+        SkinChange = new UnityEvent();
+        Shooting = new UnityEvent();
+        //Machine.SetActive(false);
     }
 
     public void PinFall()
@@ -42,17 +52,46 @@ public class GameManager : MonoBehaviour
 
         if (_shotScore == 10)
         {
+            if (!isSecondThrow)
+            {
+                StrikeAnimation();
+            }
+            else
+            {
+                StartCoroutine(SpareAnimation());
+            }
             UIManager.SetSubText(isSecondThrow ? "Spare" : "STRIKE!");
         }
     }
 
+    IEnumerator SpareAnimation()
+    {
+        SpareParticle.Play(true);
+        Sounds.Instance.PlaySpareSound();
+        yield return new WaitForSeconds(2);
+        SpareParticle.Stop();
+    }
+
+    private void StrikeAnimation()
+    {
+        StrikePartice.Play(true);
+        Sounds.Instance.PlayStrikeSound();
+        var pins = GameObject.FindGameObjectsWithTag("PIN");
+        foreach (var pin in pins)
+        {
+            pin.GetComponent<Rigidbody>().AddExplosionForce(900000f, explosionPoint.transform.position, 10f);
+        }
+    }
+
+
+
     void Start()
     {
+        // PlayerPrefs.DeleteAll();
         NextPins = GameObject.Instantiate(Pins);
         NextPins.SetActive(false);
-        NextBall = GameObject.Instantiate(BowlingBall);
-        NextBall.SetActive(false);
         Resetting = new UnityEvent();
+        _ballPos = BowlingBall.transform.position;
         EndGamePanel.SetActive(false);
         Panel.SetActive(true);
         CustomizePanel.SetActive(false);
@@ -88,25 +127,33 @@ public class GameManager : MonoBehaviour
     }
     private void FirstThrowDone()
     {
-
         if (_roundScore == 10)
         {
             // strike, finish round
+            _strikesInARow++;
+            var memory = PlayerPrefs.GetInt("STRIKES_ROW", 0);
+            if (_strikesInARow > memory)
+            {
+                PlayerPrefs.SetInt("STRIKES_ROW", _strikesInARow);
+            }
             Reset();
             return;
+        }
+        else
+        {
+            _strikesInARow = 0;
         }
 
         isSecondThrow = true;
 
         ResetBall();
+        StartCoroutine(ShowControls(1f));
 
-        GameObject[] pins = GameObject.FindGameObjectsWithTag("PIN");
-
-        foreach (var pin in pins)
+        foreach (var pin in Pins.GetComponentsInChildren<Pin>())
         {
-            if (pin.GetComponent<Pin>().hasFallen)
+            if (pin.hasFallen)
             {
-                pin.GetComponent<Pin>().Destroy();
+                pin.Destroy();
             }
         }
     }
@@ -117,7 +164,8 @@ public class GameManager : MonoBehaviour
 
         if (!_score.IsGameOver())
         {
-            ResetPins();
+            StartCoroutine(ResetPins());
+            StartCoroutine(ShowControls(2f));
         }
         _shotScore = 0;
         isSecondThrow = false;
@@ -127,7 +175,7 @@ public class GameManager : MonoBehaviour
     {
         EndGamePanel.SetActive(true);
         Panel.SetActive(false);
-        int highscore = PlayerPrefs.GetInt("HIGH_SCORE");
+        int highscore = PlayerPrefs.GetInt("HIGH_SCORE", 0);
         int numGamesPlayed = PlayerPrefs.GetInt("NUM_GAMES_PLAYED", 0);
         PlayerPrefs.SetInt("NUM_GAMES_PLAYED", numGamesPlayed + 1);
 
@@ -157,7 +205,8 @@ public class GameManager : MonoBehaviour
     public void NewGame()
     {
         _score = new Score();
-        ResetPins();
+
+        StartCoroutine(ResetPins());
         _shotScore = 0;
         isSecondThrow = false;
         UIManager.HideHighscoreText();
@@ -187,19 +236,24 @@ public class GameManager : MonoBehaviour
         UIManager.DisplayFrames(_score.GetFrames());
 
 
-        GameObject.Destroy(BowlingBall);
-        NextBall.SetActive(true);
-        BowlingBall = NextBall;
-        NextBall = GameObject.Instantiate(BowlingBall);
-        NextBall.SetActive(false);
+
+        if (BowlingBall.transform.position.y > -10f)
+        {
+            GameObject.Destroy(BowlingBall);
+        }
+        else
+        {
+            BowlingBall.tag = "Untagged";
+            Destroy(BowlingBall.GetComponent<Ball>());
+            Destroy(BowlingBall.GetComponent<Skin>());
+            Destroy(BowlingBall, 10f);
+        }
+
+        BowlingBall = GameObject.Instantiate(Resources.Load<GameObject>("BALL 1"), _ballPos, Quaternion.identity);
         Resetting.Invoke();
         BallIsThrowing = false;
 
-        if (!_score.IsGameOver())
-        {
-            Panel.SetActive(true);
-        }
-        else
+        if (_score.IsGameOver())
         {
             // is game over
             EndGame();
@@ -218,11 +272,25 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        CustomizeService.Instance.InitUnlocks();
     }
 
-    private void ResetPins()
+    IEnumerator ShowControls(float seconds)
     {
-        GameObject.Destroy(Pins);
+        yield return new WaitForSeconds(seconds);
+        Panel.SetActive(true);
+    }
+
+    IEnumerator ResetPins()
+    {
+        foreach (Pin p in Pins.GetComponentsInChildren<Pin>())
+        {
+            Destroy(p);
+        }
+
+        Machine.Instance.SweepPins();
+        yield return new WaitForSeconds(1.5f);
+        GameObject.Destroy(Pins, 10f);
         NextPins.SetActive(true);
         Pins = NextPins;
         NextPins = GameObject.Instantiate(Pins);
@@ -234,6 +302,7 @@ public class GameManager : MonoBehaviour
 
     public void OnThrow()
     {
+        Shooting.Invoke();
         Panel.SetActive(false);
         BallIsThrowing = true;
         cameraFollow.FollowBall();
@@ -260,13 +329,26 @@ public class GameManager : MonoBehaviour
     public void OnRate()
     {
         PlayerPrefs.SetInt("HAS_RATED", 1);
-        Application.OpenURL("https://play.google.com/store/apps/details?id=com.StoneBison.Bowling");
+
+        if (Application.platform == RuntimePlatform.Android)
+            Application.OpenURL("https://play.google.com/store/apps/details?id=com.StoneBison.Bowling");
+        else if (Application.platform == RuntimePlatform.IPhonePlayer)
+            Application.OpenURL("https://apps.apple.com/us/app/cosmic-bowling-by-stone-bison/id1630610818");
     }
 
     public void SetMaterial(Material material)
     {
         PlayerPrefs.SetString("BALL", material.name);
-        GameObject.FindGameObjectWithTag("BALL").GetComponent<Renderer>().material = material;
+        OnEndCustomize();
+        SkinChange.Invoke();
+    }
+
+    public void ReceiveAdReward()
+    {
+        PlayerPrefs.SetInt("IS_CLARK", 1);
+        PlayerPrefs.SetString("BALL", "CLARK");
+        SkinChange.Invoke();
         OnEndCustomize();
     }
+
 }

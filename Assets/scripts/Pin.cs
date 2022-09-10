@@ -5,24 +5,40 @@ using UnityEngine;
 public class Pin : MonoBehaviour
 {
     public GameObject PinHeight;
-    // Start is called before the first frame update
+    public GameObject Trail;
 
     private AudioSource _audioSource;
 
     public bool hasFallen = false;
     void Start()
     {
+        Trail.SetActive(false);
         _audioSource = GetComponent<AudioSource>();
     }
 
     void OnCollisionEnter(Collision collision)
     {
-
-
         if (collision.gameObject.tag == "BALL" || collision.gameObject.tag == "PIN")
         {
+      
+            var scale = collision.relativeVelocity.magnitude / 25f;
+            var direction = Vector3.Reflect(GetComponent<Rigidbody>().velocity, collision.contacts[0].normal);
+            
+            if (scale < 0.3f)
+            {
+                scale = 0.3f;
+            }
+            StartCoroutine(ShootTrail(scale, direction.normalized));
             _audioSource.Play();
         }
+    }
+
+    IEnumerator ShootTrail(float scale, Vector3 direction) {
+        Trail.transform.localScale = new Vector3(scale, scale, scale);
+        Trail.transform.rotation = Quaternion.LookRotation(-direction);
+        Trail.SetActive(true);
+        yield return new WaitForSeconds(0.8f);
+        Trail.SetActive(false);
     }
 
     public void Destroy()
