@@ -19,15 +19,26 @@ public class CustomizeItem : MonoBehaviour
     private TextMeshProUGUI _subText;
     private Material _material;
 
+    [SerializeField]
+    private RectTransform UnlockBtn;
+    [SerializeField]
+    private GameObject AdBtn;
+
     private bool _isLocked;
 
     public void Initialize(
         string name,
         string subtext,
         bool locked,
-        Material material
+        Material material,
+        bool isAd
     )
     {
+        if (isAd == false || locked == false)
+        {
+            Destroy(AdBtn);
+            UnlockBtn.offsetMax = new Vector2(0, UnlockBtn.offsetMax.y);
+        }
 
         _isLocked = locked;
         _nameText.SetText(name);
@@ -59,5 +70,10 @@ public class CustomizeItem : MonoBehaviour
 
         GameManager.Instance.SetMaterial(_material);
         GameManager.Instance.OnEndCustomize();
+    }
+
+    public void Unlock()
+    {
+        CustomizeService.Instance.UnlockWithAd();
     }
 }

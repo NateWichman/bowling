@@ -302,7 +302,6 @@ public class GameManager : MonoBehaviour
 
     public void OnThrow()
     {
-        AdManager.Instance.ShowRewardedAd();
         Shooting.Invoke();
         Panel.SetActive(false);
         BallIsThrowing = true;
@@ -342,6 +341,14 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetString("BALL", material.name);
         OnEndCustomize();
         SkinChange.Invoke();
+    }
+
+    public void ReceiveAdReward()
+    {
+        PlayerPrefs.SetInt("IS_CLARK", 1);
+        PlayerPrefs.SetString("BALL", "CLARK");
+        SkinChange.Invoke();
+        OnEndCustomize();
     }
 
 }

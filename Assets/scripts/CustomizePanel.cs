@@ -18,6 +18,7 @@ public class CustomizePanel : MonoBehaviour
         public string SubText;
         public bool Locked;
         public Material Material;
+        public bool IsAd;
 
         public Item(string name, string subText, bool locked, Material material)
         {
@@ -25,6 +26,16 @@ public class CustomizePanel : MonoBehaviour
             SubText = subText;
             Locked = locked;
             Material = material;
+            IsAd = false;
+        }
+
+        public Item(string name, string subText, bool locked, Material material, bool isAd)
+        {
+            Name = name;
+            SubText = subText;
+            Locked = locked;
+            Material = material;
+            IsAd = isAd;
         }
     };
 
@@ -74,7 +85,7 @@ public class CustomizePanel : MonoBehaviour
         new Item("Moon", "Play 10 Games", !_customizeService.Unlocks[KeyEnum.Moon], Resources.Load<Material>("Balls/Moon")),
         new Item("Core", "Play 30 Games", !_customizeService.Unlocks[KeyEnum.Core], Resources.Load<Material>("Balls/Core")),
         new Item("Earth", "Play 100 Games", !_customizeService.Unlocks[KeyEnum.Earth], Resources.Load<Material>("Balls/Earth")),
-        new Item("Clark", "Play 100 Games", !_customizeService.Unlocks[KeyEnum.Clark], Resources.Load<Material>("Balls/Clark")),
+        new Item("Clark", "Watch Ad", !_customizeService.Unlocks[KeyEnum.Clark], Resources.Load<Material>("Balls/Clark"), true),
     };
 
         _items.ForEach(item => AddItem(item));
@@ -89,8 +100,11 @@ public class CustomizePanel : MonoBehaviour
             item.Name,
             item.SubText,
             item.Locked,
-            item.Material
+            item.Material,
+            item.IsAd
         );
         obj.transform.SetParent(transform, false);
     }
+
+
 }

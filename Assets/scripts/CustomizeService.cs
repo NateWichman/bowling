@@ -47,6 +47,7 @@ public class CustomizeService : MonoBehaviour
         int isGhost = PlayerPrefs.GetInt("IS_GHOST", 0);
         int isPoolBall = PlayerPrefs.GetInt("IS_POOL_BALL", 0);
         int strikesInARow = PlayerPrefs.GetInt("STRIKES_ROW", 0);
+        int isClarkUnlocked = PlayerPrefs.GetInt("IS_CLARK", 0);
 
 
         var newUnlocks = new Dictionary<KeyEnum, bool>();
@@ -68,7 +69,7 @@ public class CustomizeService : MonoBehaviour
         newUnlocks.Add(KeyEnum.Diamond, score >= 300);
         newUnlocks.Add(KeyEnum.PoolBall, isPoolBall == 1);
         newUnlocks.Add(KeyEnum.Emerald, score >= 250);
-        newUnlocks.Add(KeyEnum.Clark, true);
+        newUnlocks.Add(KeyEnum.Clark, isClarkUnlocked == 1);
 
 
         CheckIfAnyNewUnlocks(newUnlocks);
@@ -84,5 +85,10 @@ public class CustomizeService : MonoBehaviour
         {
             UiManager.Instance.ShowUnlocked(Enum.GetName(typeof(KeyEnum), val.Key) + " UNLOCKED");
         }
+    }
+
+    public void UnlockWithAd()
+    {
+        AdManager.Instance.ShowRewardedAd();
     }
 }

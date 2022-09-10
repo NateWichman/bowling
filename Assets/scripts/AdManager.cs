@@ -13,14 +13,16 @@ public class AdManager : MonoBehaviour
 
     private InterstitialAd interstitial;
     private RewardedAd rewardedAd;
-  
+
     void Start()
     {
-        if (Application.platform == RuntimePlatform.Android) {
+        if (Application.platform == RuntimePlatform.Android)
+        {
             adUnitId = "ca-app-pub-1233908035609897/5126970497";
             rewardAdUnitId = "ca-app-pub-1233908035609897/6109641724";
         }
-        else if(Application.platform == RuntimePlatform.IPhonePlayer) {
+        else if (Application.platform == RuntimePlatform.IPhonePlayer)
+        {
             adUnitId = "ca-app-pub-1233908035609897/7429480373";
             rewardAdUnitId = "ca-app-pub-1233908035609897/8488393051";
         }
@@ -39,7 +41,8 @@ public class AdManager : MonoBehaviour
         this.interstitial.LoadAd(request);
     }
 
-    public void RequestRewardAd() {
+    public void RequestRewardAd()
+    {
         rewardedAd = new RewardedAd(rewardAdUnitId);
         AdRequest request = new AdRequest.Builder().Build();
         rewardedAd.LoadAd(request);
@@ -47,7 +50,7 @@ public class AdManager : MonoBehaviour
 
     public void OnRewardReceived(object sender, EventArgs args)
     {
-        Debug.Log("Reward Received");
+        GameManager.Instance.ReceiveAdReward();
     }
 
     public void ShowIntersitialAd()
