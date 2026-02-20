@@ -1,0 +1,5 @@
+/Users/natevanbonn/Documents/GitHub/bowling/.utmp/RelWithDebInfo/d5l4a6z3/armeabi-v7a/CMakeFiles/edit_cache.dir
+/Users/natevanbonn/Documents/GitHub/bowling/.utmp/RelWithDebInfo/d5l4a6z3/armeabi-v7a/CMakeFiles/rebuild_cache.dir
+/Users/natevanbonn/Documents/GitHub/bowling/.utmp/RelWithDebInfo/d5l4a6z3/armeabi-v7a/FramePacing/CMakeFiles/swappywrapper.dir
+/Users/natevanbonn/Documents/GitHub/bowling/.utmp/RelWithDebInfo/d5l4a6z3/armeabi-v7a/FramePacing/CMakeFiles/edit_cache.dir
+/Users/natevanbonn/Documents/GitHub/bowling/.utmp/RelWithDebInfo/d5l4a6z3/armeabi-v7a/FramePacing/CMakeFiles/rebuild_cache.dir

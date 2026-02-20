@@ -6,8 +6,8 @@ using System;
 
 public class AdManager : MonoBehaviour
 {
-    string adUnitId = "ca-app-pub-1233908035609897/5126970497";
-    string rewardAdUnitId = "ca-app-pub-1233908035609897/6109641724";
+    string adUnitId = "ca-app-pub-1233908035609897/7214429270";
+    string rewardAdUnitId = "ca-app-pub-1233908035609897/2174194890";
 
     public static AdManager Instance;
 
@@ -18,8 +18,8 @@ public class AdManager : MonoBehaviour
     {
         if (Application.platform == RuntimePlatform.Android)
         {
-            adUnitId = "ca-app-pub-1233908035609897/5126970497";
-            rewardAdUnitId = "ca-app-pub-1233908035609897/6109641724";
+            adUnitId = "ca-app-pub-1233908035609897/7214429270";
+            rewardAdUnitId = "ca-app-pub-1233908035609897/2174194890";
         }
         else if (Application.platform == RuntimePlatform.IPhonePlayer)
         {

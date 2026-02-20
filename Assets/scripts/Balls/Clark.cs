@@ -32,7 +32,7 @@ public class Clark : MonoBehaviour
 
         if (gameObject.layer == 5) return; // ui
 
-        _animator.speed = _ballRigidBody.velocity.magnitude / 40f;
+        _animator.speed = _ballRigidBody.linearVelocity.magnitude / 40f;
     }
 
     void Destroy()

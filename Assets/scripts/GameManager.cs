@@ -331,7 +331,7 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetInt("HAS_RATED", 1);
 
         if (Application.platform == RuntimePlatform.Android)
-            Application.OpenURL("https://play.google.com/store/apps/details?id=com.StoneBison.Bowling");
+            Application.OpenURL("https://play.google.com/store/apps/details?id=com.StoneBison.CelestialBowling");
         else if (Application.platform == RuntimePlatform.IPhonePlayer)
             Application.OpenURL("https://apps.apple.com/us/app/cosmic-bowling-by-stone-bison/id1630610818");
     }

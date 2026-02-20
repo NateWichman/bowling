@@ -22,7 +22,7 @@ public class Pin : MonoBehaviour
         {
       
             var scale = collision.relativeVelocity.magnitude / 25f;
-            var direction = Vector3.Reflect(GetComponent<Rigidbody>().velocity, collision.contacts[0].normal);
+            var direction = Vector3.Reflect(GetComponent<Rigidbody>().linearVelocity, collision.contacts[0].normal);
             
             if (scale < 0.3f)
             {

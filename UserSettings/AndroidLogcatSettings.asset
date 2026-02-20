@@ -1,44 +1,13 @@
 {
     "m_SelectedDeviceId": "12171JEC203497",
-    "m_SelectedPackage": {
+    "m_SelectedProcess": {
         "deviceId": "",
         "name": "",
         "processId": 0,
         "exited": false
     },
     "m_SelectedPriority": 0,
-    "m_KnownPackagesForSerialization": [
-        {
-            "deviceId": "12171JEC203497",
-            "name": "com.android.chrome",
-            "processId": 12085,
-            "exited": true
-        },
-        {
-            "deviceId": "12171JEC203497",
-            "name": "com.google.android.apps.nexuslauncher",
-            "processId": 18460,
-            "exited": true
-        },
-        {
-            "deviceId": "12171JEC203497",
-            "name": "com.StoneBison.Bowling",
-            "processId": 10491,
-            "exited": true
-        },
-        {
-            "deviceId": "12171JEC203497",
-            "name": "com.StoneBison.Bowling",
-            "processId": 11190,
-            "exited": true
-        },
-        {
-            "deviceId": "12171JEC203497",
-            "name": "com.StoneBison.Bowling",
-            "processId": 22381,
-            "exited": true
-        }
-    ],
+    "m_KnownProcessesForSerialization": [],
     "m_Tags": {
         "m_Entries": [
             {
@@ -71,8 +40,11 @@
             }
         ]
     },
+    "m_ExtraWindowState": {
+        "Type": 0,
+        "Height": 0.0
+    },
     "m_MemoryViewerState": {
-        "MemoryWindowHeight": 300.0,
         "MemoryWindowWidth": 170.0,
         "MemoryTypeEnabled": [
             true,
@@ -87,9 +59,46 @@
             true
         ],
         "MemoryGroup": 2,
-        "Behavior": 0
+        "AutoCapture": true
     },
-    "m_Filter": "",
-    "m_FilterIsRegularExpression": false,
-    "m_SymbolPaths": []
+    "m_FilterOptions": {
+        "m_Filter": "",
+        "m_UseRegularExpressions": false,
+        "m_MatchCase": false
+    },
+    "m_SymbolPaths": [],
+    "m_CaptureVideoSettings": {
+        "TimeLimitEnabled": false,
+        "TimeLimit": 180,
+        "VideoSizeEnabled": false,
+        "VideoSizeX": 1280,
+        "VideoSizeY": 720,
+        "BitRateEnabled": false,
+        "BitRateK": 20000,
+        "DisplayIdEnabled": false,
+        "DisplayId": ""
+    },
+    "m_ScreenCaptureSettings": {
+        "Mode": 0,
+        "m_LastSaveLocation": [
+            "/Users/natevanbonn/Documents/GitHub/bowling",
+            "/Users/natevanbonn/Documents/GitHub/bowling"
+        ]
+    },
+    "m_QueryLayoutSettings": {
+        "LastLayoutSaveLocation": "",
+        "LastScreenshotSaveLocation": ""
+    },
+    "m_InputSettings": {
+        "ShiftModifier": false,
+        "SendText": "",
+        "PosixKillSignal": 0,
+        "TargetProcess": {
+            "deviceId": "",
+            "name": "",
+            "processId": 0,
+            "exited": false
+        }
+    },
+    "m_AutoScroll": 2
 }
