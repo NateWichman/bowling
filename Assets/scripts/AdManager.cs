@@ -28,48 +28,91 @@ public class AdManager : MonoBehaviour
         }
 
         Instance = this;
-        MobileAds.Initialize(initStatus => { });
-        RequestIntersitialAd();
-        RequestRewardAd();
+        MobileAds.Initialize(initStatus =>
+        {
+            RequestIntersitialAd();
+            RequestRewardAd();
+        });
     }
 
     public void RequestIntersitialAd()
     {
-        this.interstitial = new InterstitialAd(adUnitId);
-        AdRequest request = new AdRequest.Builder().Build();
-        // Load the interstitial with the request.
-        this.interstitial.LoadAd(request);
+        // Destroy old ad if exists
+        if (interstitial != null)
+        {
+            interstitial.Destroy();
+            interstitial = null;
+        }
+
+        AdRequest request = new AdRequest();
+
+        InterstitialAd.Load(adUnitId, request, (InterstitialAd ad, LoadAdError error) =>
+        {
+            if (error != null || ad == null)
+            {
+                Debug.LogError("Interstitial ad failed to load: " + error);
+                return;
+            }
+            interstitial = ad;
+        });
     }
 
     public void RequestRewardAd()
     {
-        rewardedAd = new RewardedAd(rewardAdUnitId);
-        AdRequest request = new AdRequest.Builder().Build();
-        rewardedAd.LoadAd(request);
-    }
+        // Destroy old ad if exists
+        if (rewardedAd != null)
+        {
+            rewardedAd.Destroy();
+            rewardedAd = null;
+        }
 
-    public void OnRewardReceived(object sender, EventArgs args)
-    {
-        GameManager.Instance.ReceiveAdReward();
+        AdRequest request = new AdRequest();
+
+        RewardedAd.Load(rewardAdUnitId, request, (RewardedAd ad, LoadAdError error) =>
+        {
+            if (error != null || ad == null)
+            {
+                Debug.LogError("Rewarded ad failed to load: " + error);
+                return;
+            }
+            rewardedAd = ad;
+        });
     }
 
     public void ShowIntersitialAd()
     {
-        this.interstitial.Show();
-
-        this.RequestIntersitialAd();
+        if (interstitial != null && interstitial.CanShowAd())
+        {
+            interstitial.Show();
+            RequestIntersitialAd(); // preload next one
+        }
+        else
+        {
+            Debug.LogWarning("Interstitial ad not ready.");
+            RequestIntersitialAd();
+        }
     }
 
     public void ShowRewardedAd()
     {
-        rewardedAd.OnUserEarnedReward += OnRewardReceived;
-        this.rewardedAd.Show();
+        if (rewardedAd != null && rewardedAd.CanShowAd())
+        {
+            rewardedAd.Show((Reward reward) =>
+            {
+                GameManager.Instance.ReceiveAdReward();
+            });
+            RequestRewardAd();
+        }
+        else
+        {
+            Debug.LogWarning("Rewarded ad not ready.");
+            RequestRewardAd();
+        }
     }
 
     public void OnDestroy()
     {
-        // Avoids memory leaks
-        this.interstitial.Destroy();
-        this.rewardedAd.Destroy();
+        if (interstitial != null) interstitial.Destroy();
+        if (rewardedAd != null) rewardedAd.Destroy();
     }
 }
